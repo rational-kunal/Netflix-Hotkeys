@@ -1,4 +1,4 @@
-import NetflixController from "../core/NetflixController"
+import NetflixController from '../core/NetflixController'
 
 NetflixController.start()
 
