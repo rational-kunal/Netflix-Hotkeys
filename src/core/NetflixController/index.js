@@ -6,12 +6,20 @@ let buttons = {
 
   /** @type {HTMLButtonElement|undefined} */
   forwardSeek: undefined,
+
+  /** @type {HTMLButtonElement|undefined} */
+  skipIntro: undefined,
 }
 
 let netflixObserver = new MutationObserver(() => {
   if (preferences.isNetflixHotkeysEnabled) {
     buttons.backSeek = document.querySelectorAll("button[data-uia='control-back10']")[0]
     buttons.forwardSeek = document.querySelectorAll("button[data-uia='control-forward10']")[0]
+    buttons.skipIntro = document.querySelectorAll("button[data-uia='player-skip-intro']")[0]
+
+    if (preferences.isSkipIntroEnabled) {
+      buttons.skipIntro?.click()
+    }
   }
 })
 
