@@ -1,3 +1,4 @@
+import Alert from '@mui/material/Alert'
 import Stack from '@mui/material/Stack'
 import Version from '../UI/Version'
 import Header from '../UI/Header'
@@ -22,6 +23,14 @@ function App() {
     setIsSkipIntroEnable(!isSkipIntroEnable)
   }
 
+  const featureListOrWarning = isNetflixHotkeysEnable ? (
+    <FeatureList isSkipIntroEnable={isSkipIntroEnable} skipIntroToggle={skipIntroToggle} />
+  ) : (
+    <Alert severity="warning">
+      To activate the ultimate power to binge watch please enable the Netflix Hotkeys
+    </Alert>
+  )
+
   return (
     <Stack direction="column" spacing={1.5}>
       <Header />
@@ -31,7 +40,7 @@ function App() {
         onToggle={netflixHotkeysToggle}
       />
 
-      <FeatureList isSkipIntroEnable={isSkipIntroEnable} skipIntroToggle={skipIntroToggle} />
+      {featureListOrWarning}
 
       <Version />
     </Stack>
