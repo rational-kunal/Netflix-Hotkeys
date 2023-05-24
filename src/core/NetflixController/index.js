@@ -9,6 +9,9 @@ let buttons = {
 
   /** @type {HTMLButtonElement|undefined} */
   skipIntro: undefined,
+
+  /** @type {HTMLButtonElement|undefined} */
+  skipToNextEpisode: undefined,
 }
 
 let netflixObserver = new MutationObserver(() => {
@@ -16,9 +19,13 @@ let netflixObserver = new MutationObserver(() => {
     buttons.backSeek = document.querySelectorAll("button[data-uia='control-back10']")[0]
     buttons.forwardSeek = document.querySelectorAll("button[data-uia='control-forward10']")[0]
     buttons.skipIntro = document.querySelectorAll("button[data-uia='player-skip-intro']")[0]
+    buttons.skipToNextEpisode = document.querySelectorAll(
+      "button[data-uia='next-episode-seamless-button']",
+    )[0]
 
-    if (preferences.isSkipIntroEnabled) {
+    if (preferences.isPowerSkipEnabled) {
       buttons.skipIntro?.click()
+      buttons.skipToNextEpisode?.click()
     }
   }
 })

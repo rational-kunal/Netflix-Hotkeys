@@ -11,20 +11,20 @@ function App() {
   const [isNetflixHotkeysEnable, setIsNetflixHotkeysEnable] = useState(
     preferences.isNetflixHotkeysEnabled,
   )
-  const [isSkipIntroEnable, setIsSkipIntroEnable] = useState(preferences.isSkipIntroEnabled)
+  const [isPowerSkipEnable, setIsPowerSkipEnable] = useState(preferences.isPowerSkipEnabled)
 
   const netflixHotkeysToggle = () => {
     preferences.isNetflixHotkeysEnabled = !isNetflixHotkeysEnable
     setIsNetflixHotkeysEnable(!isNetflixHotkeysEnable)
   }
 
-  const skipIntroToggle = () => {
-    preferences.isSkipIntroEnabled = !isSkipIntroEnable
-    setIsSkipIntroEnable(!isSkipIntroEnable)
+  const powerSkipToggle = () => {
+    preferences.isPowerSkipEnabled = !isPowerSkipEnable
+    setIsPowerSkipEnable(!isPowerSkipEnable)
   }
 
   const featureListOrWarning = isNetflixHotkeysEnable ? (
-    <FeatureList isSkipIntroEnable={isSkipIntroEnable} skipIntroToggle={skipIntroToggle} />
+    <FeatureList isPowerSkipEnable={isPowerSkipEnable} powerSkipToggle={powerSkipToggle} />
   ) : (
     <Alert severity="warning">
       To activate the ultimate power to binge watch please enable the Netflix Hotkeys

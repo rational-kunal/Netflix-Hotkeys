@@ -4,7 +4,7 @@ import { Paper } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
 
-function FeatureList({ isSkipIntroEnable, skipIntroToggle }) {
+function FeatureList({ isPowerSkipEnable, powerSkipToggle }) {
   return (
     <Paper elevation={1} sx={{ p: 2 }}>
       <Stack direction="column" spacing={1} divider={<Divider variant="middle" />}>
@@ -21,9 +21,9 @@ function FeatureList({ isSkipIntroEnable, skipIntroToggle }) {
         />
 
         <FeatureSwitch
-          checked={isSkipIntroEnable}
-          label="Automatically skip intro"
-          onToggle={skipIntroToggle}
+          checked={isPowerSkipEnable}
+          label="Power Skip (Intro, End Credits)"
+          onToggle={powerSkipToggle}
         />
       </Stack>
     </Paper>
