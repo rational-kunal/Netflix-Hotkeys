@@ -1,5 +1,12 @@
 import preferences from '../Preferences'
 
+const Page = Object.freeze({
+  USER_SELECTION: 'USER_SELECTION',
+  PASSWORD_INPUT: 'PASSWORD_INPUT',
+  PASSWORD_INPUT_WRONG: 'PASSWORD_INPUT_WRONG',
+  VIDEO_PLAYER: 'VIDEO_PLAYER',
+})
+
 let buttons = {
   /** @type {HTMLButtonElement|undefined} */
   backSeek: undefined,
@@ -14,21 +21,90 @@ let buttons = {
   skipToNextEpisode: undefined,
 }
 
-let netflixObserver = new MutationObserver(() => {
-  if (preferences.isNetflixHotkeysEnabled) {
-    buttons.backSeek = document.querySelectorAll("button[data-uia='control-back10']")[0]
-    buttons.forwardSeek = document.querySelectorAll("button[data-uia='control-forward10']")[0]
-    buttons.skipIntro = document.querySelectorAll("button[data-uia='player-skip-intro']")[0]
-    buttons.skipToNextEpisode = document.querySelectorAll(
-      "button[data-uia='next-episode-seamless-button']",
-    )[0]
+// TODO: Create a Netflix Crawler
+const guessPage = () => {
+  if (document.getElementsByTagName('h1')[0]?.innerText === "Who's watching?") {
+    return Page.USER_SELECTION
+  }
 
-    if (preferences.isPowerSkipEnabled) {
-      buttons.skipIntro?.click()
-      buttons.skipToNextEpisode?.click()
+  if (
+    document.getElementsByTagName('h1')[0]?.innerText === 'Enter your PIN to access this profile.'
+  ) {
+    return Page.PASSWORD_INPUT
+  }
+
+  if (
+    document.getElementsByTagName('h1')[0]?.innerText === 'Whoops, wrong PIN. Please try again.'
+  ) {
+    return Page.PASSWORD_INPUT_WRONG
+  }
+
+  return Page.VIDEO_PLAYER
+}
+
+const userSelectionPageObserver = () => {
+  const usernameEls = document.querySelectorAll('span.profile-name')
+  let defaultUsernameEl = undefined
+  const usernames = []
+  for (const usernameEl of usernameEls) {
+    usernames.push(usernameEl.innerText)
+    if (usernameEl.innerText === preferences.defaultUsername) {
+      defaultUsernameEl = usernameEl
     }
   }
-})
+
+  preferences.usernameList = usernames
+  defaultUsernameEl?.click()
+}
+
+const videoPlayerPageObserver = () => {
+  buttons.backSeek = document.querySelectorAll("button[data-uia='control-back10']")[0]
+  buttons.forwardSeek = document.querySelectorAll("button[data-uia='control-forward10']")[0]
+  buttons.skipIntro = document.querySelectorAll("button[data-uia='player-skip-intro']")[0]
+  buttons.skipToNextEpisode = document.querySelectorAll(
+    "button[data-uia='next-episode-seamless-button']",
+  )[0]
+
+  if (preferences.isPowerSkipEnabled) {
+    buttons.skipIntro?.click()
+    buttons.skipToNextEpisode?.click()
+  }
+}
+
+const passwordInputPageObserver = () => {
+  const password = preferences.profilePassword
+  if (!password && password.length !== 4 && isNaN(password)) {
+    return
+  }
+
+  const inputNumber1 = document.querySelectorAll("input[data-uia='pin-number-0']")[0]
+
+  const clipboardData = new DataTransfer()
+  clipboardData.setData('text/plain', password)
+  inputNumber1.dispatchEvent(
+    new ClipboardEvent('paste', { clipboardData: clipboardData, bubbles: true }),
+  )
+}
+
+const mainObserver = () => {
+  const page = guessPage()
+  switch (page) {
+    case Page.USER_SELECTION:
+      userSelectionPageObserver()
+      break
+    case Page.PASSWORD_INPUT:
+      passwordInputPageObserver()
+      break
+    case Page.PASSWORD_INPUT_WRONG:
+      // Either the default password is wrong or user entered wrong password
+      break
+    case Page.VIDEO_PLAYER:
+      videoPlayerPageObserver()
+      break
+  }
+}
+
+const netflixObserver = new MutationObserver(callIfNetflixHotkeysEnabled(mainObserver))
 
 function start() {
   netflixObserver.observe(document.documentElement || document.body, {
