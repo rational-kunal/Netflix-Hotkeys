@@ -23,25 +23,26 @@ let buttons = {
 
 // TODO: Create a Netflix Crawler
 const guessPage = () => {
-  if (document.getElementsByTagName('h1')[0]?.innerText === "Who's watching?") {
+  const firstHeader = document.getElementsByTagName('h1')[0]?.innerText
+  if (firstHeader === "Who's watching?") {
     return Page.USER_SELECTION
   }
 
-  if (
-    document.getElementsByTagName('h1')[0]?.innerText === 'Enter your PIN to access this profile.'
-  ) {
+  if (firstHeader === 'Enter your PIN to access this profile.') {
     return Page.PASSWORD_INPUT
   }
 
-  if (
-    document.getElementsByTagName('h1')[0]?.innerText === 'Whoops, wrong PIN. Please try again.'
-  ) {
+  if (firstHeader === 'Whoops, wrong PIN. Please try again.') {
     return Page.PASSWORD_INPUT_WRONG
   }
 
   return Page.VIDEO_PLAYER
 }
 
+/**
+ * User Selection Observer
+ * Observes the user selection page and selects the default user if auto login is enabled.
+ */
 const userSelectionPageObserver = () => {
   const usernameEls = document.querySelectorAll('span.profile-name')
   let defaultUsernameEl = undefined
@@ -57,20 +58,11 @@ const userSelectionPageObserver = () => {
   defaultUsernameEl?.click()
 }
 
-const videoPlayerPageObserver = () => {
-  buttons.backSeek = document.querySelectorAll("button[data-uia='control-back10']")[0]
-  buttons.forwardSeek = document.querySelectorAll("button[data-uia='control-forward10']")[0]
-  buttons.skipIntro = document.querySelectorAll("button[data-uia='player-skip-intro']")[0]
-  buttons.skipToNextEpisode = document.querySelectorAll(
-    "button[data-uia='next-episode-seamless-button']",
-  )[0]
-
-  if (preferences.isPowerSkipEnabled) {
-    buttons.skipIntro?.click()
-    buttons.skipToNextEpisode?.click()
-  }
-}
-
+/**
+ * Password Input Observer
+ * Observes the password input page and enters the default password if auto login is enabled.
+ * Detail: Copy pastes the password to the first input field.
+ */
 const passwordInputPageObserver = () => {
   const password = preferences.profilePassword
   if (!password && password.length !== 4 && isNaN(password)) {
@@ -84,6 +76,25 @@ const passwordInputPageObserver = () => {
   inputNumber1.dispatchEvent(
     new ClipboardEvent('paste', { clipboardData: clipboardData, bubbles: true }),
   )
+}
+
+/**
+ * Video Player Observer
+ * Observes the video player page and skips intro and auto plays next episode if auto skip is enabled.
+ * Also, stores the reference to the buttons for seeking forward and backward.
+ */
+const videoPlayerPageObserver = () => {
+  buttons.backSeek = document.querySelectorAll("button[data-uia='control-back10']")[0]
+  buttons.forwardSeek = document.querySelectorAll("button[data-uia='control-forward10']")[0]
+  buttons.skipIntro = document.querySelectorAll("button[data-uia='player-skip-intro']")[0]
+  buttons.skipToNextEpisode = document.querySelectorAll(
+    "button[data-uia='next-episode-seamless-button']",
+  )[0]
+
+  if (preferences.isPowerSkipEnabled) {
+    buttons.skipIntro?.click()
+    buttons.skipToNextEpisode?.click()
+  }
 }
 
 const mainObserver = () => {
