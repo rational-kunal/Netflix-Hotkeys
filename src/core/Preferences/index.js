@@ -98,12 +98,12 @@ chrome.storage.local.get(
     PROFILE_PASSWORD_KEY,
   ],
   (result) => {
-    _isNetflixHotkeysEnabled = result[NETFLIX_HOTKEYS_ENABLED_KEY]
-    _isPowerSkipEnabled = result[POWER_ENABLED_KEY]
-    _usernameList = result[USERNAME_LIST_KEY]
-    _isAutoLoginEnabled = result[AUTO_LOGIN_ENABLED_KEY]
-    _defaultUsername = result[DEFAULT_USERNAME_KEY]
-    _profilePassword = result[PROFILE_PASSWORD_KEY]
+    _isNetflixHotkeysEnabled = result[NETFLIX_HOTKEYS_ENABLED_KEY] || false
+    _isPowerSkipEnabled = result[POWER_ENABLED_KEY] || false
+    _usernameList = result[USERNAME_LIST_KEY] || []
+    _isAutoLoginEnabled = result[AUTO_LOGIN_ENABLED_KEY] || false
+    _defaultUsername = result[DEFAULT_USERNAME_KEY] || ''
+    _profilePassword = result[PROFILE_PASSWORD_KEY] || ''
   },
 )
 
