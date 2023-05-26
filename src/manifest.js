@@ -12,7 +12,8 @@ export default defineManifest({
     128: 'img/logo-128.png',
   },
   action: {
-    default_popup: 'src/popup.html',
+    // Instead of using a popup, we will use an options page
+    // default_popup: 'src/popup.html',
     default_icon: 'img/logo-48.png',
   },
   options_page: 'src/options.html',
@@ -32,5 +33,5 @@ export default defineManifest({
       matches: [],
     },
   ],
-  permissions: ['storage'],
+  permissions: ['storage', 'tabs'],
 })
