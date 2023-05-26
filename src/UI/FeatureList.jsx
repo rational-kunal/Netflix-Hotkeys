@@ -1,6 +1,6 @@
 import FeatureSwitch from './FeatureSwitch'
 import Stack from '@mui/material/Stack'
-import { Box, Paper } from '@mui/material'
+import { Box, Paper, Alert } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
 import FeatureSelect from './FeatureSelect'
@@ -17,6 +17,31 @@ function FeatureList({
   profilePassword,
   onProfilePasswordChange,
 }) {
+  const autoLoginFormOrWarning =
+    usernameList.length > 0 ? (
+      <Stack direction="row" spacing={1.5}>
+        <FeatureSelect
+          label="Default profile"
+          valueList={usernameList}
+          defaultValue={defaultUsername}
+          onSelect={onUsernameSelect}
+        />
+
+        {/* TODO: Add validation for password */}
+        <FeatureTextInput
+          label="Profile password"
+          type="password"
+          value={profilePassword}
+          onValueChange={onProfilePasswordChange}
+        />
+      </Stack>
+    ) : (
+      <Alert severity="info">
+        Please open Netflix profile selection page and refresh this page to properly set up Auto
+        Login feature.
+      </Alert>
+    )
+
   return (
     <Paper elevation={1} sx={{ p: 2 }}>
       <Stack direction="column" spacing={1.5} divider={<Divider variant="middle" />}>
@@ -49,22 +74,7 @@ function FeatureList({
           />
 
           <Box sx={{ mt: 1 }} hidden={!isAutoLoginEnable}>
-            <Stack direction="row" spacing={1.5}>
-              <FeatureSelect
-                label="Default profile"
-                valueList={usernameList}
-                defaultValue={defaultUsername}
-                onSelect={onUsernameSelect}
-              />
-
-              {/* TODO: Add validation for password */}
-              <FeatureTextInput
-                label="Profile password"
-                type="password"
-                value={profilePassword}
-                onValueChange={onProfilePasswordChange}
-              />
-            </Stack>
+            {autoLoginFormOrWarning}
           </Box>
         </Box>
       </Stack>
