@@ -1,3 +1,4 @@
+import './main.css'
 import Alert from '@mui/material/Alert'
 import Stack from '@mui/material/Stack'
 import Version from '../UI/Version'
@@ -6,6 +7,7 @@ import { useState } from 'react'
 import preferences from '../core/Preferences'
 import OverallSwitch from '../UI/OverallSwitch'
 import FeatureList from '../UI/FeatureList'
+import Typography from '@mui/material/Typography'
 
 function App() {
   const [isNetflixHotkeysEnable, setIsNetflixHotkeysEnable] = useState(
@@ -55,7 +57,9 @@ function App() {
     />
   ) : (
     <Alert severity="warning">
-      To activate the ultimate power to binge watch please enable the Netflix Hotkeys
+      <Typography variant="subtitle2">
+        To activate the ultimate power to binge watch please enable the Netflix Hotkeys
+      </Typography>
     </Alert>
   )
 

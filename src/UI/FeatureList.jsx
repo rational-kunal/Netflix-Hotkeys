@@ -37,16 +37,16 @@ function FeatureList({
       </Stack>
     ) : (
       <Alert severity="info">
-        Please open Netflix profile selection page and refresh this page to properly set up Auto
-        Login feature.
+        <Typography variant="subtitle2">
+          Please open Netflix profile selection page and refresh this page to properly set up Auto
+          Login feature.
+        </Typography>
       </Alert>
     )
 
   return (
     <Paper elevation={1} sx={{ p: 2 }}>
       <Stack direction="column" spacing={1.5} divider={<Divider variant="middle" />}>
-        <Typography variant="h6"> Supported Features </Typography>
-
         {/* A and D to seek */}
         <FeatureSwitch
           checked={true}
