@@ -19,6 +19,9 @@ let buttons = {
 
   /** @type {HTMLButtonElement|undefined} */
   skipToNextEpisode: undefined,
+
+  /** @type {HTMLButtonElement|undefined} */
+  nextEpisode: undefined,
 }
 
 // TODO: Create a Netflix Crawler
@@ -90,6 +93,7 @@ const videoPlayerPageObserver = () => {
   buttons.skipToNextEpisode = document.querySelectorAll(
     "button[data-uia='next-episode-seamless-button']",
   )[0]
+  buttons.nextEpisode = document.querySelectorAll("button[data-uia='control-next']")[0]
 
   if (preferences.isPowerSkipEnabled) {
     buttons.skipIntro?.click()
@@ -134,6 +138,10 @@ function seekBackward() {
   buttons.backSeek?.click()
 }
 
+function jumpToNextEpisode() {
+  buttons.nextEpisode?.click()
+}
+
 function callIfNetflixHotkeysEnabled(func) {
   return () => {
     if (preferences.isNetflixHotkeysEnabled) {
@@ -146,4 +154,5 @@ export default {
   start,
   seekForward: callIfNetflixHotkeysEnabled(seekForward),
   seekBackward: callIfNetflixHotkeysEnabled(seekBackward),
+  jumpToNextEpisode: callIfNetflixHotkeysEnabled(jumpToNextEpisode),
 }

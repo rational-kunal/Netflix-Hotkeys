@@ -8,6 +8,8 @@ document.addEventListener('keydown', (event) => {
     NetflixController.seekBackward()
   } else if (event.key === 'd') {
     NetflixController.seekForward()
+  } else if (event.key === 'n') {
+    NetflixController.jumpToNextEpisode()
   }
 })
 

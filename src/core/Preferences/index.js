@@ -4,6 +4,7 @@ const USERNAME_LIST_KEY = 'USERNAME_LIST'
 const AUTO_LOGIN_ENABLED_KEY = 'AUTO_LOGIN_ENABLED_KEY'
 const DEFAULT_USERNAME_KEY = 'DEFAULT_USERNAME'
 const PROFILE_PASSWORD_KEY = 'PROFILE_PASSWORD'
+const NEXT_EPISODE_HOTKEY_ENABLED_KEY = 'NEXT_EPISODE_HOTKEY_ENABLED'
 
 let _isNetflixHotkeysEnabled = false
 let _isPowerSkipEnabled = false
@@ -11,6 +12,7 @@ let _usernameList = []
 let _isAutoLoginEnabled = false
 let _defaultUsername = ''
 let _profilePassword = ''
+let _isNextEpisodeHotkeyEnabled = false
 class Preferences {
   /**
    * Whether user has opted to enable Netflix hotkeys extension. In short this is a overall switch.
@@ -83,6 +85,18 @@ class Preferences {
     _profilePassword = value
     chrome.storage.local.set({ [PROFILE_PASSWORD_KEY]: value })
   }
+
+  /**
+   * Whether user has opted to enable next episode hotkey.
+   * @type {boolean}
+   */
+  get isNextEpisodeHotkeyEnabled() {
+    return _isNextEpisodeHotkeyEnabled
+  }
+  set isNextEpisodeHotkeyEnabled(value) {
+    _isNextEpisodeHotkeyEnabled = value
+    chrome.storage.local.set({ [NEXT_EPISODE_HOTKEY_ENABLED_KEY]: value })
+  }
 }
 
 let preferences = new Preferences()
@@ -96,6 +110,7 @@ chrome.storage.local.get(
     AUTO_LOGIN_ENABLED_KEY,
     DEFAULT_USERNAME_KEY,
     PROFILE_PASSWORD_KEY,
+    NEXT_EPISODE_HOTKEY_ENABLED_KEY,
   ],
   (result) => {
     _isNetflixHotkeysEnabled = result[NETFLIX_HOTKEYS_ENABLED_KEY] || false
@@ -104,6 +119,7 @@ chrome.storage.local.get(
     _isAutoLoginEnabled = result[AUTO_LOGIN_ENABLED_KEY] || false
     _defaultUsername = result[DEFAULT_USERNAME_KEY] || ''
     _profilePassword = result[PROFILE_PASSWORD_KEY] || ''
+    _isNextEpisodeHotkeyEnabled = result[NEXT_EPISODE_HOTKEY_ENABLED_KEY] || false
   },
 )
 
@@ -120,6 +136,8 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
       _isAutoLoginEnabled = changes[key].newValue
     } else if (key === DEFAULT_USERNAME_KEY) {
       _defaultUsername = changes[key].newValue
+    } else if (key === NEXT_EPISODE_HOTKEY_ENABLED_KEY) {
+      _isNextEpisodeHotkeyEnabled = changes[key].newValue
     }
   }
 })

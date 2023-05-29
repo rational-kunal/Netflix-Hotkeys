@@ -16,6 +16,8 @@ function FeatureList({
   onUsernameSelect,
   profilePassword,
   onProfilePasswordChange,
+  isNextEpisodeHotkeyEnabled,
+  onNextEpisodeHotkeyToggle,
 }) {
   const autoLoginFormOrWarning =
     usernameList.length > 0 ? (
@@ -56,6 +58,17 @@ function FeatureList({
             </Typography>
           }
           disabled={true}
+        />
+
+        {/* Next Episode Hotkey */}
+        <FeatureSwitch
+          checked={isNextEpisodeHotkeyEnabled}
+          label={
+            <Typography>
+              <kbd>N</kbd> to next episode.
+            </Typography>
+          }
+          onToggle={onNextEpisodeHotkeyToggle}
         />
 
         {/* Power Skip (Intro, End Credits) */}
