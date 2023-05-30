@@ -1,56 +1,14 @@
 import preferences from '../Preferences'
-
-const Page = Object.freeze({
-  USER_SELECTION: 'USER_SELECTION',
-  PASSWORD_INPUT: 'PASSWORD_INPUT',
-  PASSWORD_INPUT_WRONG: 'PASSWORD_INPUT_WRONG',
-  VIDEO_PLAYER: 'VIDEO_PLAYER',
-})
-
-let buttons = {
-  /** @type {HTMLButtonElement|undefined} */
-  backSeek: undefined,
-
-  /** @type {HTMLButtonElement|undefined} */
-  forwardSeek: undefined,
-
-  /** @type {HTMLButtonElement|undefined} */
-  skipIntro: undefined,
-
-  /** @type {HTMLButtonElement|undefined} */
-  skipToNextEpisode: undefined,
-
-  /** @type {HTMLButtonElement|undefined} */
-  nextEpisode: undefined,
-}
-
-// TODO: Create a Netflix Crawler
-const guessPage = () => {
-  const firstHeader = document.getElementsByTagName('h1')[0]?.innerText
-  if (firstHeader === "Who's watching?") {
-    return Page.USER_SELECTION
-  }
-
-  if (firstHeader === 'Enter your PIN to access this profile.') {
-    return Page.PASSWORD_INPUT
-  }
-
-  if (firstHeader === 'Whoops, wrong PIN. Please try again.') {
-    return Page.PASSWORD_INPUT_WRONG
-  }
-
-  return Page.VIDEO_PLAYER
-}
+import NetflixCrawler, {Page} from '../NetflixCrawler'
 
 /**
  * User Selection Observer
  * Observes the user selection page and selects the default user if auto login is enabled.
  */
 const userSelectionPageObserver = () => {
-  const usernameEls = document.querySelectorAll('span.profile-name')
   let defaultUsernameEl = undefined
   const usernames = []
-  for (const usernameEl of usernameEls) {
+  for (const usernameEl of NetflixCrawler.controls.profileNameEls) {
     usernames.push(usernameEl.innerText)
     if (usernameEl.innerText === preferences.defaultUsername) {
       defaultUsernameEl = usernameEl
@@ -72,11 +30,9 @@ const passwordInputPageObserver = () => {
     return
   }
 
-  const inputNumber1 = document.querySelectorAll("input[data-uia='pin-number-0']")[0]
-
   const clipboardData = new DataTransfer()
   clipboardData.setData('text/plain', password)
-  inputNumber1.dispatchEvent(
+  NetflixCrawler.controls.profilePasswordInput.dispatchEvent(
     new ClipboardEvent('paste', { clipboardData: clipboardData, bubbles: true }),
   )
 }
@@ -87,65 +43,42 @@ const passwordInputPageObserver = () => {
  * Also, stores the reference to the buttons for seeking forward and backward.
  */
 const videoPlayerPageObserver = () => {
-  buttons.backSeek = document.querySelectorAll("button[data-uia='control-back10']")[0]
-  buttons.forwardSeek = document.querySelectorAll("button[data-uia='control-forward10']")[0]
-  buttons.skipIntro = document.querySelectorAll("button[data-uia='player-skip-intro']")[0]
-  buttons.skipToNextEpisode = document.querySelectorAll(
-    "button[data-uia='next-episode-seamless-button']",
-  )[0]
-  buttons.nextEpisode = document.querySelectorAll("button[data-uia='control-next']")[0]
-
   if (preferences.isPowerSkipEnabled) {
-    buttons.skipIntro?.click()
-    buttons.skipToNextEpisode?.click()
+    NetflixCrawler.controls.skipIntroButton?.click()
+    NetflixCrawler.controls.skipToNextEpisodeButton?.click()
   }
 }
 
-const mainObserver = () => {
-  console.info('[🕸️] Netflix Hotkeys: Main Observer triggered')
-  const page = guessPage()
-  switch (page) {
-    case Page.USER_SELECTION:
-      userSelectionPageObserver()
-      break
-    case Page.PASSWORD_INPUT:
-      passwordInputPageObserver()
-      break
-    case Page.PASSWORD_INPUT_WRONG:
-      // Either the default password is wrong or user entered wrong password
-      break
-    case Page.VIDEO_PLAYER:
-      videoPlayerPageObserver()
-      break
+NetflixCrawler.addChangeListener(() => {
+  const page = NetflixCrawler.controls.page
+  if (page === Page.USER_SELECTION) {
+    userSelectionPageObserver()
+  } else if (page === Page.PASSWORD_INPUT) {
+    passwordInputPageObserver()
+  } else if (page === Page.VIDEO_PLAYER) {
+    videoPlayerPageObserver()
   }
-}
-
-const netflixObserver = new MutationObserver(mainObserver)
+})
 
 function start() {
-  netflixObserver.observe(document.documentElement || document.body, {
-    childList: true,
-    subtree: true,
-  })
+  NetflixCrawler.start()
 }
 
 function stop() {
-  netflixObserver.disconnect()
+  NetflixCrawler.stop()
 }
 
-// TODO: Listen to preference change for netflix hotkeys enabled / disabled and start / stop accordingly
-
 function seekForward() {
-  buttons.forwardSeek?.click()
+  NetflixCrawler.controls.forwardSeekButton?.click()
 }
 
 function seekBackward() {
-  buttons.backSeek?.click()
+  NetflixCrawler.controls.backSeekButton?.click()
 }
 
 function jumpToNextEpisode() {
   if (preferences.isNextEpisodeHotkeyEnabled) {
-    buttons.nextEpisode?.click()
+    NetflixCrawler.controls.nextEpisodeButton?.click()
   }
 }
 
