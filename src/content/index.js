@@ -1,15 +1,27 @@
 import NetflixController from '../core/NetflixController'
+import preferences from '../core/Preferences'
 
-NetflixController.start()
-
-// Listen to events from user and act accordingly
-document.addEventListener('keydown', (event) => {
+/**
+ * Takes action on the user input
+ * @param {KeyboardEvent} event
+ */
+function onUserInput(event) {
   if (event.key === 'a') {
     NetflixController.seekBackward()
   } else if (event.key === 'd') {
     NetflixController.seekForward()
   } else if (event.key === 'n') {
     NetflixController.jumpToNextEpisode()
+  }
+}
+
+preferences.addListener(() => {
+  if (preferences.isNetflixHotkeysEnabled) {
+    document.addEventListener('keydown', onUserInput)
+    NetflixController.start()
+  } else {
+    document.removeEventListener('keydown', onUserInput)
+    NetflixController.stop()
   }
 })
 

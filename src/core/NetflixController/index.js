@@ -102,6 +102,7 @@ const videoPlayerPageObserver = () => {
 }
 
 const mainObserver = () => {
+  console.info('[🕸️] Netflix Hotkeys: Main Observer triggered')
   const page = guessPage()
   switch (page) {
     case Page.USER_SELECTION:
@@ -119,13 +120,17 @@ const mainObserver = () => {
   }
 }
 
-const netflixObserver = new MutationObserver(callIfNetflixHotkeysEnabled(mainObserver))
+const netflixObserver = new MutationObserver(mainObserver)
 
 function start() {
   netflixObserver.observe(document.documentElement || document.body, {
     childList: true,
     subtree: true,
   })
+}
+
+function stop() {
+  netflixObserver.disconnect()
 }
 
 // TODO: Listen to preference change for netflix hotkeys enabled / disabled and start / stop accordingly
@@ -139,7 +144,9 @@ function seekBackward() {
 }
 
 function jumpToNextEpisode() {
-  buttons.nextEpisode?.click()
+  if (preferences.isNextEpisodeHotkeyEnabled) {
+    buttons.nextEpisode?.click()
+  }
 }
 
 function callIfNetflixHotkeysEnabled(func) {
@@ -152,6 +159,7 @@ function callIfNetflixHotkeysEnabled(func) {
 
 export default {
   start,
+  stop,
   seekForward: callIfNetflixHotkeysEnabled(seekForward),
   seekBackward: callIfNetflixHotkeysEnabled(seekBackward),
   jumpToNextEpisode: callIfNetflixHotkeysEnabled(jumpToNextEpisode),

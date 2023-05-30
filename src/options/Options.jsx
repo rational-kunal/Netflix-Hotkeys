@@ -17,7 +17,9 @@ function App() {
   const [isAutoLoginEnable, setIsAutoLoginEnable] = useState(preferences.isAutoLoginEnabled)
   const [defaultUsername, setDefaultUsername] = useState(preferences.defaultUsername)
   const [profilePassword, setProfilePassword] = useState(preferences.profilePassword)
-  const [nextEpisodeHotkeyEnabled, setNextEpisodeHotkeyEnabled] = useState(preferences.isNextEpisodeHotkeyEnabled)
+  const [nextEpisodeHotkeyEnabled, setNextEpisodeHotkeyEnabled] = useState(
+    preferences.isNextEpisodeHotkeyEnabled,
+  )
 
   const netflixHotkeysToggle = () => {
     preferences.isNetflixHotkeysEnabled = !isNetflixHotkeysEnable
