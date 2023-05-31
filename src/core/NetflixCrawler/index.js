@@ -112,6 +112,4 @@ export default {
   controls,
 }
 
-export {
-    Page
-}
+export { Page }

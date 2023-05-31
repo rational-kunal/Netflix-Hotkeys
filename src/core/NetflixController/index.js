@@ -1,5 +1,6 @@
 import preferences from '../Preferences'
-import NetflixCrawler, {Page} from '../NetflixCrawler'
+import NetflixCrawler, { Page } from '../NetflixCrawler'
+import Executor from './Executor'
 
 /**
  * User Selection Observer
@@ -69,17 +70,24 @@ function stop() {
 }
 
 function seekForward() {
-  NetflixCrawler.controls.forwardSeekButton?.click()
+  Executor.executeOrAddToQueue(() => {
+    return clickIfButtonExists(NetflixCrawler.controls.forwardSeekButton)
+  })
 }
 
 function seekBackward() {
-  NetflixCrawler.controls.backSeekButton?.click()
+  Executor.executeOrAddToQueue(() => {
+    return clickIfButtonExists(NetflixCrawler.controls.backSeekButton)
+  })
 }
 
 function jumpToNextEpisode() {
-  if (preferences.isNextEpisodeHotkeyEnabled) {
-    NetflixCrawler.controls.nextEpisodeButton?.click()
+  if (!preferences.isNextEpisodeHotkeyEnabled) {
+    return
   }
+  Executor.executeOrAddToQueue(() => {
+    return clickIfButtonExists(NetflixCrawler.controls.nextEpisodeButton)
+  })
 }
 
 function callIfNetflixHotkeysEnabled(func) {
@@ -88,6 +96,14 @@ function callIfNetflixHotkeysEnabled(func) {
       func()
     }
   }
+}
+
+function clickIfButtonExists(button) {
+  if (button) {
+    button.click()
+    return true
+  }
+  return false
 }
 
 export default {
