@@ -42,8 +42,7 @@ function FeatureList({
     ) : (
       <Alert severity="info">
         <Typography variant="subtitle2">
-          Please open Netflix profile selection page and refresh this page to properly set up Auto
-          Login feature.
+          Please open Netflix profile selection page and refresh this page to properly set up Auto Login feature.
         </Typography>
       </Alert>
     )
@@ -88,19 +87,11 @@ function FeatureList({
         />
 
         {/* Power Skip (Intro, End Credits) */}
-        <FeatureSwitch
-          checked={isPowerSkipEnable}
-          label="Power Skip (Intro, End Credits)"
-          onToggle={powerSkipToggle}
-        />
+        <FeatureSwitch checked={isPowerSkipEnable} label="Power Skip (Intro, End Credits)" onToggle={powerSkipToggle} />
 
         {/* Auto Login */}
         <Box>
-          <FeatureSwitch
-            checked={isAutoLoginEnable}
-            label="Auto Login"
-            onToggle={autoLoginToggle}
-          />
+          <FeatureSwitch checked={isAutoLoginEnable} label="Auto Login" onToggle={autoLoginToggle} />
 
           <Box sx={{ mt: 1 }} hidden={!isAutoLoginEnable}>
             {autoLoginFormOrWarning}

@@ -10,19 +10,13 @@ import FeatureList from '../UI/FeatureList'
 import Typography from '@mui/material/Typography'
 
 function App() {
-  const [isNetflixHotkeysEnable, setIsNetflixHotkeysEnable] = useState(
-    preferences.isNetflixHotkeysEnabled,
-  )
+  const [isNetflixHotkeysEnable, setIsNetflixHotkeysEnable] = useState(preferences.isNetflixHotkeysEnabled)
   const [isPowerSkipEnable, setIsPowerSkipEnable] = useState(preferences.isPowerSkipEnabled)
   const [isAutoLoginEnable, setIsAutoLoginEnable] = useState(preferences.isAutoLoginEnabled)
   const [defaultUsername, setDefaultUsername] = useState(preferences.defaultUsername)
   const [profilePassword, setProfilePassword] = useState(preferences.profilePassword)
-  const [nextEpisodeHotkeyEnabled, setNextEpisodeHotkeyEnabled] = useState(
-    preferences.isNextEpisodeHotkeyEnabled,
-  )
-  const [isStartOverEpisodeEnabled, setIsStartOverEpisodeEnabled] = useState(
-    preferences.isStartOverEpisodeEnabled,
-  )
+  const [nextEpisodeHotkeyEnabled, setNextEpisodeHotkeyEnabled] = useState(preferences.isNextEpisodeHotkeyEnabled)
+  const [isStartOverEpisodeEnabled, setIsStartOverEpisodeEnabled] = useState(preferences.isStartOverEpisodeEnabled)
 
   const netflixHotkeysToggle = () => {
     preferences.isNetflixHotkeysEnabled = !isNetflixHotkeysEnable
@@ -87,10 +81,7 @@ function App() {
     <Stack direction="column" spacing={1.5}>
       <Header />
 
-      <OverallSwitch
-        isNetflixHotkeysEnable={isNetflixHotkeysEnable}
-        onToggle={netflixHotkeysToggle}
-      />
+      <OverallSwitch isNetflixHotkeysEnable={isNetflixHotkeysEnable} onToggle={netflixHotkeysToggle} />
 
       {featureListOrWarning}
 
