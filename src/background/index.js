@@ -5,4 +5,9 @@ chrome.action.onClicked.addListener(() => {
   chrome.tabs.create({ url: 'src/options.html' })
 })
 
+// Open options page when installed
+chrome.runtime.onInstalled.addListener(() => {
+  chrome.tabs.create({ url: 'src/options.html' })
+})
+
 export {}
