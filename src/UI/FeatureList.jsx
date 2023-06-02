@@ -20,6 +20,8 @@ function FeatureList({
   onNextEpisodeHotkeyToggle,
   isStartOverEpisodeEnabled,
   onStartOverEpisodeToggle,
+  isSeekFeatureEnable,
+  onSeekFeatureToggle,
 }) {
   const autoLoginFormOrWarning =
     usernameList.length > 0 ? (
@@ -59,19 +61,22 @@ function FeatureList({
     />
   )
 
+  const seekFeatureSwitch = (
+    <FeatureSwitch
+      checked={isSeekFeatureEnable}
+      label={
+        <Typography>
+          <kbd>A</kbd> and <kbd>D</kbd> to seek backward and forward.
+        </Typography>
+      }
+      onToggle={onSeekFeatureToggle}
+    />
+  )
+
   return (
     <Paper elevation={1} sx={{ p: 2 }}>
       <Stack direction="column" spacing={1.5} divider={<Divider variant="middle" />}>
-        {/* A and D to seek */}
-        <FeatureSwitch
-          checked={true}
-          label={
-            <Typography>
-              <kbd>A</kbd> and <kbd>D</kbd> to seek backward and forward.
-            </Typography>
-          }
-          disabled={true}
-        />
+        {seekFeatureSwitch}
 
         {startOverEpisodeFeatureSwitch}
 

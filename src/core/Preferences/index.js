@@ -6,8 +6,10 @@ const DEFAULT_USERNAME_KEY = 'DEFAULT_USERNAME'
 const PROFILE_PASSWORD_KEY = 'PROFILE_PASSWORD'
 const NEXT_EPISODE_HOTKEY_ENABLED_KEY = 'NEXT_EPISODE_HOTKEY_ENABLED'
 const START_OVER_EPISODE_ENABLED_KEY = 'START_OVER_EPISODE_ENABLED'
+const SEEK_ENABLED_KEY = 'SEEK_ENABLED'
 
 let _isNetflixHotkeysEnabled = false
+let _isSeekFeatureEnabled = false
 let _isPowerSkipEnabled = false
 let _usernameList = []
 let _isAutoLoginEnabled = false
@@ -27,6 +29,18 @@ class Preferences {
   set isNetflixHotkeysEnabled(value) {
     _isNetflixHotkeysEnabled = value
     chrome.storage.local.set({ [NETFLIX_HOTKEYS_ENABLED_KEY]: value })
+  }
+
+  /**
+   * Whether user has opted to enable seek feature.
+   * @type {boolean}
+   */
+  get isSeekFeatureEnabled() {
+    return _isSeekFeatureEnabled
+  }
+  set isSeekFeatureEnabled(value) {
+    _isSeekFeatureEnabled = value
+    chrome.storage.local.set({ [SEEK_ENABLED_KEY]: value })
   }
 
   /**
@@ -139,6 +153,7 @@ let preferences = new Preferences()
 chrome.storage.local.get(
   [
     NETFLIX_HOTKEYS_ENABLED_KEY,
+    SEEK_ENABLED_KEY,
     POWER_ENABLED_KEY,
     USERNAME_LIST_KEY,
     AUTO_LOGIN_ENABLED_KEY,
@@ -149,6 +164,7 @@ chrome.storage.local.get(
   ],
   (result) => {
     _isNetflixHotkeysEnabled = result[NETFLIX_HOTKEYS_ENABLED_KEY] || false
+    _isSeekFeatureEnabled = result[SEEK_ENABLED_KEY] || false
     _isPowerSkipEnabled = result[POWER_ENABLED_KEY] || false
     _usernameList = result[USERNAME_LIST_KEY] || []
     _isAutoLoginEnabled = result[AUTO_LOGIN_ENABLED_KEY] || false
@@ -168,6 +184,8 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
     if (key === NETFLIX_HOTKEYS_ENABLED_KEY && _isNetflixHotkeysEnabled !== changes[key].newValue) {
       _isNetflixHotkeysEnabled = changes[key].newValue
       preferences._callListeners()
+    } else if (key === SEEK_ENABLED_KEY) {
+      _isSeekFeatureEnabled = changes[key].newValue
     } else if (key === POWER_ENABLED_KEY) {
       _isPowerSkipEnabled = changes[key].newValue
     } else if (key === USERNAME_LIST_KEY) {

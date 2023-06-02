@@ -70,12 +70,20 @@ function stop() {
 }
 
 function seekForward() {
+  if (!preferences.isSeekFeatureEnabled) {
+    return
+  }
+
   Executor.executeOrAddToQueue(() => {
     return clickIfButtonExists(NetflixCrawler.controls.forwardSeekButton)
   })
 }
 
 function seekBackward() {
+  if (!preferences.isSeekFeatureEnabled) {
+    return
+  }
+
   Executor.executeOrAddToQueue(() => {
     return clickIfButtonExists(NetflixCrawler.controls.backSeekButton)
   })

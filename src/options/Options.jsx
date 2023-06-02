@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography'
 
 function App() {
   const [isNetflixHotkeysEnable, setIsNetflixHotkeysEnable] = useState(preferences.isNetflixHotkeysEnabled)
+  const [isSeekFeatureEnable, setIsSeekFeatureEnable] = useState(preferences.isSeekFeatureEnabled)
   const [isPowerSkipEnable, setIsPowerSkipEnable] = useState(preferences.isPowerSkipEnabled)
   const [isAutoLoginEnable, setIsAutoLoginEnable] = useState(preferences.isAutoLoginEnabled)
   const [defaultUsername, setDefaultUsername] = useState(preferences.defaultUsername)
@@ -53,6 +54,11 @@ function App() {
     setIsStartOverEpisodeEnabled(!isStartOverEpisodeEnabled)
   }
 
+  const onSeekFeatureToggle = () => {
+    preferences.isSeekFeatureEnabled = !isSeekFeatureEnable
+    setIsSeekFeatureEnable(!isSeekFeatureEnable)
+  }
+
   const featureListOrWarning = isNetflixHotkeysEnable ? (
     <FeatureList
       isPowerSkipEnable={isPowerSkipEnable}
@@ -68,6 +74,8 @@ function App() {
       onNextEpisodeHotkeyToggle={onNextEpisodeHotkeyToggle}
       isStartOverEpisodeEnabled={isStartOverEpisodeEnabled}
       onStartOverEpisodeToggle={onStartOverEpisodeToggle}
+      isSeekFeatureEnable={isSeekFeatureEnable}
+      onSeekFeatureToggle={onSeekFeatureToggle}
     />
   ) : (
     <Alert severity="warning">
