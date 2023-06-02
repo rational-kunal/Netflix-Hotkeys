@@ -20,6 +20,9 @@ function App() {
   const [nextEpisodeHotkeyEnabled, setNextEpisodeHotkeyEnabled] = useState(
     preferences.isNextEpisodeHotkeyEnabled,
   )
+  const [isStartOverEpisodeEnabled, setIsStartOverEpisodeEnabled] = useState(
+    preferences.isStartOverEpisodeEnabled,
+  )
 
   const netflixHotkeysToggle = () => {
     preferences.isNetflixHotkeysEnabled = !isNetflixHotkeysEnable
@@ -51,6 +54,11 @@ function App() {
     setNextEpisodeHotkeyEnabled(!nextEpisodeHotkeyEnabled)
   }
 
+  const onStartOverEpisodeToggle = () => {
+    preferences.isStartOverEpisodeEnabled = !isStartOverEpisodeEnabled
+    setIsStartOverEpisodeEnabled(!isStartOverEpisodeEnabled)
+  }
+
   const featureListOrWarning = isNetflixHotkeysEnable ? (
     <FeatureList
       isPowerSkipEnable={isPowerSkipEnable}
@@ -64,6 +72,8 @@ function App() {
       onProfilePasswordChange={onProfilePasswordChange}
       isNextEpisodeHotkeyEnabled={nextEpisodeHotkeyEnabled}
       onNextEpisodeHotkeyToggle={onNextEpisodeHotkeyToggle}
+      isStartOverEpisodeEnabled={isStartOverEpisodeEnabled}
+      onStartOverEpisodeToggle={onStartOverEpisodeToggle}
     />
   ) : (
     <Alert severity="warning">

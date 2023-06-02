@@ -90,6 +90,43 @@ function jumpToNextEpisode() {
   })
 }
 
+function startOverEpisode() {
+  if (!preferences.isStartOverEpisodeEnabled) {
+    return
+  }
+
+  Executor.executeOrAddToQueue(() => {
+    if (!NetflixCrawler.controls.timeline) {
+      return false
+    }
+
+    // After much debugging and looking through all things like "chrome.debugger" and "puppeteer" following logic was found to work.
+    // For some weird reason we need to dispatch both mouse down and mouse up events to seek to the beginning of the episode.
+    // NOTE: This has more probability of breaking in future.
+    const timelineRect = NetflixCrawler.controls.timeline.getBoundingClientRect()
+    const x = timelineRect.left
+    const y = timelineRect.top + timelineRect.height * 0.5
+
+    NetflixCrawler.controls.timeline.dispatchEvent(
+      new MouseEvent('mousedown', {
+        clientX: x,
+        clientY: y,
+        bubbles: true,
+      }),
+    )
+
+    NetflixCrawler.controls.timeline.dispatchEvent(
+      new MouseEvent('mouseup', {
+        clientX: x,
+        clientY: y,
+        bubbles: true,
+      }),
+    )
+
+    return true
+  })
+}
+
 function callIfNetflixHotkeysEnabled(func) {
   return () => {
     if (preferences.isNetflixHotkeysEnabled) {
@@ -112,4 +149,5 @@ export default {
   seekForward: callIfNetflixHotkeysEnabled(seekForward),
   seekBackward: callIfNetflixHotkeysEnabled(seekBackward),
   jumpToNextEpisode: callIfNetflixHotkeysEnabled(jumpToNextEpisode),
+  startOverEpisode: callIfNetflixHotkeysEnabled(startOverEpisode),
 }

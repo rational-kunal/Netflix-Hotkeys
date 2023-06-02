@@ -5,6 +5,7 @@ const AUTO_LOGIN_ENABLED_KEY = 'AUTO_LOGIN_ENABLED_KEY'
 const DEFAULT_USERNAME_KEY = 'DEFAULT_USERNAME'
 const PROFILE_PASSWORD_KEY = 'PROFILE_PASSWORD'
 const NEXT_EPISODE_HOTKEY_ENABLED_KEY = 'NEXT_EPISODE_HOTKEY_ENABLED'
+const START_OVER_EPISODE_ENABLED_KEY = 'START_OVER_EPISODE_ENABLED'
 
 let _isNetflixHotkeysEnabled = false
 let _isPowerSkipEnabled = false
@@ -13,6 +14,7 @@ let _isAutoLoginEnabled = false
 let _defaultUsername = ''
 let _profilePassword = ''
 let _isNextEpisodeHotkeyEnabled = false
+let _isStartOverEpisodeEnabled = false
 let _changeListeners = []
 class Preferences {
   /**
@@ -100,6 +102,18 @@ class Preferences {
   }
 
   /**
+   * Whether user has opted to enable start over episode hotkey.
+   * @type {boolean}
+   */
+  get isStartOverEpisodeEnabled() {
+    return _isStartOverEpisodeEnabled
+  }
+  set isStartOverEpisodeEnabled(value) {
+    _isStartOverEpisodeEnabled = value
+    chrome.storage.local.set({ [START_OVER_EPISODE_ENABLED_KEY]: value })
+  }
+
+  /**
    * Listens for changes to preferences.
    * NOTE: Currently only called if Netflix Hotkeys is enabled or disabled.
    * @param {function} callback
@@ -131,6 +145,7 @@ chrome.storage.local.get(
     DEFAULT_USERNAME_KEY,
     PROFILE_PASSWORD_KEY,
     NEXT_EPISODE_HOTKEY_ENABLED_KEY,
+    START_OVER_EPISODE_ENABLED_KEY,
   ],
   (result) => {
     _isNetflixHotkeysEnabled = result[NETFLIX_HOTKEYS_ENABLED_KEY] || false
@@ -140,6 +155,7 @@ chrome.storage.local.get(
     _defaultUsername = result[DEFAULT_USERNAME_KEY] || ''
     _profilePassword = result[PROFILE_PASSWORD_KEY] || ''
     _isNextEpisodeHotkeyEnabled = result[NEXT_EPISODE_HOTKEY_ENABLED_KEY] || false
+    _isStartOverEpisodeEnabled = result[START_OVER_EPISODE_ENABLED_KEY] || false
 
     preferences._callListeners()
   },
@@ -162,6 +178,8 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
       _defaultUsername = changes[key].newValue
     } else if (key === NEXT_EPISODE_HOTKEY_ENABLED_KEY) {
       _isNextEpisodeHotkeyEnabled = changes[key].newValue
+    } else if (key === START_OVER_EPISODE_ENABLED_KEY) {
+      _isStartOverEpisodeEnabled = changes[key].newValue
     }
   }
 })

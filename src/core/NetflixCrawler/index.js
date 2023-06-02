@@ -102,6 +102,11 @@ let controls = {
   get nextEpisodeButton() {
     return document.querySelector("button[data-uia='control-next']")
   },
+
+  /** @type {HTMLElement|undefined} */
+  get timeline() {
+    return document.querySelector("div[data-uia='timeline']")
+  },
 }
 
 export default {

@@ -12,6 +12,8 @@ function onUserInput(event) {
     NetflixController.seekForward()
   } else if (event.key === 'n') {
     NetflixController.jumpToNextEpisode()
+  } else if (event.key === 'r') {
+    NetflixController.startOverEpisode()
   }
 }
 

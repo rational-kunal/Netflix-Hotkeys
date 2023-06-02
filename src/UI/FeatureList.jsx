@@ -18,6 +18,8 @@ function FeatureList({
   onProfilePasswordChange,
   isNextEpisodeHotkeyEnabled,
   onNextEpisodeHotkeyToggle,
+  isStartOverEpisodeEnabled,
+  onStartOverEpisodeToggle,
 }) {
   const autoLoginFormOrWarning =
     usernameList.length > 0 ? (
@@ -46,6 +48,18 @@ function FeatureList({
       </Alert>
     )
 
+  const startOverEpisodeFeatureSwitch = (
+    <FeatureSwitch
+      checked={isStartOverEpisodeEnabled}
+      label={
+        <Typography>
+          <kbd>R</kbd> to start over the video.
+        </Typography>
+      }
+      onToggle={onStartOverEpisodeToggle}
+    />
+  )
+
   return (
     <Paper elevation={1} sx={{ p: 2 }}>
       <Stack direction="column" spacing={1.5} divider={<Divider variant="middle" />}>
@@ -59,6 +73,8 @@ function FeatureList({
           }
           disabled={true}
         />
+
+        {startOverEpisodeFeatureSwitch}
 
         {/* Next Episode Hotkey */}
         <FeatureSwitch
