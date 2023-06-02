@@ -9,9 +9,11 @@ Why did I create this extension? Simple. Every time I opened Netflix on Chrome, 
 - [x] Seek
 - [x] Skip intro, end credits
 - [x] Auto Login
-- [ ] Next episode
-- [ ] Start over the episode
+- [x] Next episode
+- [x] Start over the episode
 - [ ] Subtitle
+- [ ] Audio
+- [ ] Speed up
 
 ---
 
