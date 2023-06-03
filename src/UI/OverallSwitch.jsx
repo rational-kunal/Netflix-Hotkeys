@@ -1,17 +1,19 @@
 import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew'
 import Button from '@mui/material/Button'
+import usePreferences from './hooks/usePreferences'
 
-function OverallSwitch({ isNetflixHotkeysEnable, onToggle }) {
+function OverallSwitch() {
+  const { isNetflixHotkeysEnabled, setIsNetflixHotkeysEnabled } = usePreferences().netflixHotkeys
   return (
     <Button
       variant="outlined"
       size="large"
       startIcon={<PowerSettingsNewIcon />}
-      color={isNetflixHotkeysEnable ? 'error' : 'success'}
-      onClick={onToggle}
+      color={isNetflixHotkeysEnabled ? 'error' : 'success'}
+      onClick={() => setIsNetflixHotkeysEnabled(!isNetflixHotkeysEnabled)}
       fullWidth
     >
-      {isNetflixHotkeysEnable ? 'Disable' : 'Enable'}
+      {isNetflixHotkeysEnabled ? 'Disable' : 'Enable'}
     </Button>
   )
 }
