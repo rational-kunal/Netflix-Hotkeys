@@ -123,4 +123,18 @@ describe('Demo Storage', () => {
 
     expect(listener).toHaveBeenCalledTimes(1)
   })
+
+  it('should not notify listeners after they are removed', () => {
+    const demo = new Demo()
+    demo.build()
+
+    const listener = jest.fn()
+    demo.on('x', listener)
+    demo.x = 4
+    expect(listener).toHaveBeenCalledTimes(1)
+
+    demo.off('x', listener)
+    demo.x = 5
+    expect(listener).toHaveBeenCalledTimes(1)
+  })
 })

@@ -74,6 +74,13 @@ class Storage {
       callback()
     }
   }
+
+  off(fieldToListen, callback) {
+    if (!this._listeners[fieldToListen]) {
+      return
+    }
+    this._listeners[fieldToListen] = this._listeners[fieldToListen].filter((c) => c !== callback)
+  }
 }
 
 export default Storage

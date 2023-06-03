@@ -214,6 +214,21 @@ describe('Preferences', () => {
 
     expect(listener).toHaveBeenCalledTimes(1)
   })
+
+  it('should not listen for changes to the chrome storage if listener is removed', () => {
+    const preferences = new Preferences()
+    preferences.build()
+
+    const listener = jest.fn()
+    preferences.on('isNetflixHotkeysEnabled', listener)
+
+    preferences.isNetflixHotkeysEnabled = true
+    expect(listener).toHaveBeenCalledTimes(1)
+
+    preferences.off('isNetflixHotkeysEnabled', listener)
+    preferences.isNetflixHotkeysEnabled = false
+    expect(listener).toHaveBeenCalledTimes(1)
+  })
 })
 
 describe('The preferences instance', () => {
