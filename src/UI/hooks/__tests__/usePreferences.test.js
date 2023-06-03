@@ -1,6 +1,6 @@
 import usePreferences from '../usePreferences'
 import { renderHook, act } from '@testing-library/react'
-import preferences from '../../../core/Preferences/Preferences'
+import { preferences } from '../../../core/Preferences'
 
 describe('usePreferences', () => {
   describe('should get and set value of', () => {

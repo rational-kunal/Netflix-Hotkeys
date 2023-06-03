@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import preferences from '../../core/Preferences/Preferences'
+import { preferences } from '../../core/Preferences'
 
 // TODO: This is really inefficient. Check if there is a way to create a single hook.
 

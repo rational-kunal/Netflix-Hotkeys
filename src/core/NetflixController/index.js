@@ -1,4 +1,4 @@
-import preferences from '../Preferences'
+import { preferences } from '../Preferences'
 import NetflixCrawler, { Page } from '../NetflixCrawler'
 import Executor from './Executor'
 
@@ -70,7 +70,7 @@ function stop() {
 }
 
 function seekForward() {
-  if (!preferences.isSeekFeatureEnabled) {
+  if (!preferences.isSlowSeekEnabled) {
     return
   }
 
@@ -80,7 +80,7 @@ function seekForward() {
 }
 
 function seekBackward() {
-  if (!preferences.isSeekFeatureEnabled) {
+  if (!preferences.isSlowSeekEnabled) {
     return
   }
 
@@ -90,7 +90,7 @@ function seekBackward() {
 }
 
 function jumpToNextEpisode() {
-  if (!preferences.isNextEpisodeHotkeyEnabled) {
+  if (!preferences.isStartNextEpisodeEnabled) {
     return
   }
   Executor.executeOrAddToQueue(() => {
