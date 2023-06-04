@@ -7,10 +7,9 @@ const Label = 'Profile Password'
 
 function ProfilePasswordControl() {
   const { profilePassword, setProfilePassword } = usePreferences().profilePassword
-  const { isAutoLoginEnabled } = usePreferences().autoLogin
 
   return (
-    <FormControl variant="outlined" disabled={!isAutoLoginEnabled} fullWidth>
+    <FormControl variant="outlined" fullWidth>
       <InputLabel>{Label}</InputLabel>
       <OutlinedInput
         type="password"

@@ -10,10 +10,9 @@ function DefaultUsernameControl() {
   const preferences = usePreferences()
   const { usernameList } = preferences
   const { defaultUsername, setDefaultUsername } = preferences.defaultUsername
-  const { isAutoLoginEnabled } = preferences.autoLogin
 
   return (
-    <FormControl disabled={!isAutoLoginEnabled} fullWidth>
+    <FormControl fullWidth>
       <InputLabel> {Label} </InputLabel>
       <Select value={defaultUsername} label={Label} onChange={(e) => setDefaultUsername(e.target.value)}>
         {usernameList.map((username) => (

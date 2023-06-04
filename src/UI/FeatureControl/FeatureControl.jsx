@@ -11,8 +11,18 @@ import SlowSeekControl from './SlowSeekControl'
 import StartNextEpisodeControl from './StartNextEpisodeControl'
 import StartOverEpisodeControl from './StartOverEpisodeControl'
 
+const Warning = (
+  <Alert severity="info">
+    <Typography variant="subtitle2">
+      Please open Netflix profile selection page and refresh this page to properly set up Auto Login feature.
+    </Typography>
+  </Alert>
+)
+
 function FeatureControl() {
   const usernameList = usePreferences().usernameList
+  const { isAutoLoginEnabled } = usePreferences().autoLogin
+
   const autoLoginFormOrWarning =
     usernameList.length > 0 ? (
       <Stack direction="row" spacing={1.5}>
@@ -20,11 +30,7 @@ function FeatureControl() {
         <ProfilePasswordControl />
       </Stack>
     ) : (
-      <Alert severity="info">
-        <Typography variant="subtitle2">
-          Please open Netflix profile selection page and refresh this page to properly set up Auto Login feature.
-        </Typography>
-      </Alert>
+      Warning
     )
 
   return (
@@ -36,7 +42,9 @@ function FeatureControl() {
         <PowerSkipControl />
         <Box>
           <AutoLoginControl />
-          <Box sx={{ mt: 1 }}>{autoLoginFormOrWarning}</Box>
+          <Box sx={{ mt: 1 }} hidden={!isAutoLoginEnabled}>
+            {autoLoginFormOrWarning}
+          </Box>
         </Box>
       </Stack>
     </Paper>
