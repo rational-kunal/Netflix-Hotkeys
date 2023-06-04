@@ -10,4 +10,11 @@ chrome.runtime.onInstalled.addListener(() => {
   chrome.tabs.create({ url: 'src/options.html' })
 })
 
+// Listen to changes in chrome storage (for debugging)
+chrome.storage.onChanged.addListener((changes, namespace) => {
+  for (const [key, { oldValue, newValue }] of Object.entries(changes)) {
+    console.log('[📁] Storage updated:', key, oldValue, '→', newValue)
+  }
+})
+
 export {}
