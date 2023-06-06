@@ -5,15 +5,18 @@ import { preferences } from '../../../core/Preferences'
 describe('usePreferences', () => {
   describe('should get and set value of', () => {
     // Initially set preferences value to non-default value so that we can test that value is read from preferences
-    preferences.isNetflixHotkeysEnabled = true
-    preferences.isSlowSeekEnabled = true
-    preferences.isPowerSkipEnabled = true
-    preferences.isAutoLoginEnabled = true
-    preferences.usernameList = ['test']
-    preferences.defaultUsername = 'test'
-    preferences.profilePassword = 'test'
-    preferences.isStartNextEpisodeEnabled = true
-    preferences.isStartOverEpisodeEnabled = true
+    // TODO: Create mock for preferences
+    beforeEach(() => {
+      preferences.isNetflixHotkeysEnabled = true
+      preferences.isSlowSeekEnabled = true
+      preferences.isPowerSkipEnabled = true
+      preferences.isAutoLoginEnabled = true
+      preferences.usernameList = ['test']
+      preferences.defaultUsername = 'test'
+      preferences.profilePassword = 'test'
+      preferences.isStartNextEpisodeEnabled = true
+      preferences.isStartOverEpisodeEnabled = true
+    })
 
     it('isNetflixHotkeysEnabled', () => {
       const { result } = renderHook(() => usePreferences())
@@ -118,6 +121,20 @@ describe('usePreferences', () => {
   })
 
   describe('should update value when preferences value is changed of', () => {
+    // Initially reset the values to default.
+    // TODO: Create mock for preferences
+    beforeEach(() => {
+      preferences.isNetflixHotkeysEnabled = false
+      preferences.isSlowSeekEnabled = false
+      preferences.isPowerSkipEnabled = false
+      preferences.isAutoLoginEnabled = false
+      preferences.usernameList = []
+      preferences.defaultUsername = ''
+      preferences.profilePassword = ''
+      preferences.isStartNextEpisodeEnabled = false
+      preferences.isStartOverEpisodeEnabled = false
+    })
+
     it('isNetflixHotkeysEnabled', () => {
       const { result } = renderHook(() => usePreferences())
       expect(result.current.netflixHotkeys.isNetflixHotkeysEnabled).toBe(false)
@@ -138,6 +155,17 @@ describe('usePreferences', () => {
       })
 
       expect(result.current.autoLogin.isAutoLoginEnabled).toBe(true)
+    })
+
+    it('usernameList', () => {
+      const { result } = renderHook(() => usePreferences())
+      expect(result.current.usernameList).toEqual([])
+
+      act(() => {
+        preferences.usernameList = ['test']
+      })
+
+      expect(result.current.usernameList).toEqual(['test'])
     })
   })
 })

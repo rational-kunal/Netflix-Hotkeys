@@ -14,7 +14,7 @@ import StartOverEpisodeControl from './StartOverEpisodeControl'
 const Warning = (
   <Alert severity="info">
     <Typography variant="subtitle2">
-      Please open Netflix profile selection page and refresh this page to properly set up Auto Login feature.
+      Please open Netflix profile selection page to properly set up Auto Login feature.
     </Typography>
   </Alert>
 )

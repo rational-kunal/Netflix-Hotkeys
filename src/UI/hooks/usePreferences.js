@@ -10,30 +10,30 @@ function usePreferences() {
   const [isSlowSeekEnabled, setIsSlowSeekEnabled] = useState(preferences.isSlowSeekEnabled)
   const [isPowerSkipEnabled, setIsPowerSkipEnabled] = useState(preferences.isPowerSkipEnabled)
   const [isAutoLoginEnabled, setIsAutoLoginEnabled] = useState(preferences.isAutoLoginEnabled)
+  const [usernameList, setUsernameList] = useState(preferences.usernameList)
   const [defaultUsername, setDefaultUsername] = useState(preferences.defaultUsername)
   const [profilePassword, setProfilePassword] = useState(preferences.profilePassword)
   const [isStartNextEpisodeEnabled, setIsStartNextEpisodeEnabled] = useState(preferences.isStartNextEpisodeEnabled)
   const [isStartOverEpisodeEnabled, setIsStartOverEpisodeEnabled] = useState(preferences.isStartOverEpisodeEnabled)
 
   // Listen to changes in preferences
+  // Currently we are listening to only required preferences to avoid unnecessary re-renders
   useEffect(() => {
-    const updateNetflixHotkeys = () => {
-      setIsNetflixHotkeysEnabled(preferences.isNetflixHotkeysEnabled)
-    }
+    const updateNetflixHotkeys = () => setIsNetflixHotkeysEnabled(preferences.isNetflixHotkeysEnabled)
     preferences.on('isNetflixHotkeysEnabled', updateNetflixHotkeys)
-    return () => {
-      preferences.off('isNetflixHotkeysEnabled', updateNetflixHotkeys)
-    }
+    return () => preferences.off('isNetflixHotkeysEnabled', updateNetflixHotkeys)
   }, [])
 
   useEffect(() => {
-    const updateIsAutoLoginEnabled = () => {
-      setIsAutoLoginEnabled(preferences.isAutoLoginEnabled)
-    }
+    const updateIsAutoLoginEnabled = () => setIsAutoLoginEnabled(preferences.isAutoLoginEnabled)
     preferences.on('isAutoLoginEnabled', updateIsAutoLoginEnabled)
-    return () => {
-      preferences.off('isAutoLoginEnabled', updateIsAutoLoginEnabled)
-    }
+    return () => preferences.off('isAutoLoginEnabled', updateIsAutoLoginEnabled)
+  }, [])
+
+  useEffect(() => {
+    const updateUsernameList = () => setUsernameList(preferences.usernameList)
+    preferences.on('usernameList', updateUsernameList)
+    return () => preferences.off('usernameList', updateUsernameList)
   }, [])
 
   // Update respective preference when value is changed
@@ -74,7 +74,7 @@ function usePreferences() {
     slowSeek: { isSlowSeekEnabled, setIsSlowSeekEnabled },
     powerSkip: { isPowerSkipEnabled, setIsPowerSkipEnabled },
     autoLogin: { isAutoLoginEnabled, setIsAutoLoginEnabled },
-    usernameList: preferences.usernameList,
+    usernameList: usernameList,
     defaultUsername: { defaultUsername, setDefaultUsername },
     profilePassword: { profilePassword, setProfilePassword },
     startNextEpisode: { isStartNextEpisodeEnabled, setIsStartNextEpisodeEnabled },
