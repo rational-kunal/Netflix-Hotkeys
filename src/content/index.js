@@ -1,5 +1,5 @@
 import NetflixController from '../core/NetflixController'
-import { preferences } from '../core/Preferences'
+import { Preferences } from '../core/Preferences'
 
 /**
  * Takes action on the user input
@@ -17,11 +17,11 @@ function onUserInput(event) {
   }
 }
 
-preferences.on('isNetflixHotkeysEnabled', () => {
+Preferences.instance.on('isNetflixHotkeysEnabled', () => {
   document.removeEventListener('keydown', onUserInput)
   NetflixController.stop()
 
-  if (preferences.isNetflixHotkeysEnabled) {
+  if (Preferences.instance.isNetflixHotkeysEnabled) {
     document.addEventListener('keydown', onUserInput)
     NetflixController.start()
   } else {

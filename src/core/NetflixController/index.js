@@ -1,4 +1,4 @@
-import { preferences } from '../Preferences'
+import { Preferences } from '../Preferences'
 import NetflixCrawler, { Page } from '../NetflixCrawler'
 import Executor from './Executor'
 
@@ -11,12 +11,12 @@ const userSelectionPageObserver = () => {
   const usernames = []
   for (const usernameEl of NetflixCrawler.controls.profileNameEls) {
     usernames.push(usernameEl.innerText)
-    if (usernameEl.innerText === preferences.defaultUsername) {
+    if (usernameEl.innerText === Preferences.instance.defaultUsername) {
       defaultUsernameEl = usernameEl
     }
   }
 
-  preferences.usernameList = usernames
+  Preferences.instance.usernameList = usernames
   defaultUsernameEl?.click()
 }
 
@@ -26,7 +26,7 @@ const userSelectionPageObserver = () => {
  * Detail: Copy pastes the password to the first input field.
  */
 const passwordInputPageObserver = () => {
-  const password = preferences.profilePassword
+  const password = Preferences.instance.profilePassword
   if (!password && password.length !== 4 && isNaN(password)) {
     return
   }
@@ -44,7 +44,7 @@ const passwordInputPageObserver = () => {
  * Also, stores the reference to the buttons for seeking forward and backward.
  */
 const videoPlayerPageObserver = () => {
-  if (preferences.isPowerSkipEnabled) {
+  if (Preferences.instance.isPowerSkipEnabled) {
     NetflixCrawler.controls.skipIntroButton?.click()
     NetflixCrawler.controls.skipToNextEpisodeButton?.click()
   }
@@ -70,7 +70,7 @@ function stop() {
 }
 
 function seekForward() {
-  if (!preferences.isSlowSeekEnabled) {
+  if (!Preferences.instance.isSlowSeekEnabled) {
     return
   }
 
@@ -80,7 +80,7 @@ function seekForward() {
 }
 
 function seekBackward() {
-  if (!preferences.isSlowSeekEnabled) {
+  if (!Preferences.instance.isSlowSeekEnabled) {
     return
   }
 
@@ -90,7 +90,7 @@ function seekBackward() {
 }
 
 function jumpToNextEpisode() {
-  if (!preferences.isStartNextEpisodeEnabled) {
+  if (!Preferences.instance.isStartNextEpisodeEnabled) {
     return
   }
   Executor.executeOrAddToQueue(() => {
@@ -99,7 +99,7 @@ function jumpToNextEpisode() {
 }
 
 function startOverEpisode() {
-  if (!preferences.isStartOverEpisodeEnabled) {
+  if (!Preferences.instance.isStartOverEpisodeEnabled) {
     return
   }
 
@@ -137,7 +137,7 @@ function startOverEpisode() {
 
 function callIfNetflixHotkeysEnabled(func) {
   return () => {
-    if (preferences.isNetflixHotkeysEnabled) {
+    if (Preferences.instance.isNetflixHotkeysEnabled) {
       func()
     }
   }

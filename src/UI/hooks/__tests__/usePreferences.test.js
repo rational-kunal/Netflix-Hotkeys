@@ -1,21 +1,24 @@
 import usePreferences from '../usePreferences'
 import { renderHook, act } from '@testing-library/react'
-import { preferences } from '../../../core/Preferences'
+import { Preferences } from '../../../core/Preferences'
 
 describe('usePreferences', () => {
   describe('should get and set value of', () => {
     // Initially set preferences value to non-default value so that we can test that value is read from preferences
-    // TODO: Create mock for preferences
     beforeEach(() => {
-      preferences.isNetflixHotkeysEnabled = true
-      preferences.isSlowSeekEnabled = true
-      preferences.isPowerSkipEnabled = true
-      preferences.isAutoLoginEnabled = true
-      preferences.usernameList = ['test']
-      preferences.defaultUsername = 'test'
-      preferences.profilePassword = 'test'
-      preferences.isStartNextEpisodeEnabled = true
-      preferences.isStartOverEpisodeEnabled = true
+      Preferences.instance.isNetflixHotkeysEnabled = true
+      Preferences.instance.isSlowSeekEnabled = true
+      Preferences.instance.isPowerSkipEnabled = true
+      Preferences.instance.isAutoLoginEnabled = true
+      Preferences.instance.usernameList = ['test']
+      Preferences.instance.defaultUsername = 'test'
+      Preferences.instance.profilePassword = 'test'
+      Preferences.instance.isStartNextEpisodeEnabled = true
+      Preferences.instance.isStartOverEpisodeEnabled = true
+    })
+
+    afterEach(() => {
+      Preferences.reset()
     })
 
     it('isNetflixHotkeysEnabled', () => {
@@ -27,7 +30,7 @@ describe('usePreferences', () => {
       })
 
       expect(result.current.netflixHotkeys.isNetflixHotkeysEnabled).toBe(false)
-      expect(preferences.isNetflixHotkeysEnabled).toBe(false)
+      expect(Preferences.instance.isNetflixHotkeysEnabled).toBe(false)
     })
 
     it('isSlowSeekEnabled', () => {
@@ -39,7 +42,7 @@ describe('usePreferences', () => {
       })
 
       expect(result.current.slowSeek.isSlowSeekEnabled).toBe(false)
-      expect(preferences.isSlowSeekEnabled).toBe(false)
+      expect(Preferences.instance.isSlowSeekEnabled).toBe(false)
     })
 
     it('isPowerSkipEnabled', () => {
@@ -51,7 +54,7 @@ describe('usePreferences', () => {
       })
 
       expect(result.current.powerSkip.isPowerSkipEnabled).toBe(false)
-      expect(preferences.isPowerSkipEnabled).toBe(false)
+      expect(Preferences.instance.isPowerSkipEnabled).toBe(false)
     })
 
     it('isAutoLoginEnabled', () => {
@@ -63,7 +66,7 @@ describe('usePreferences', () => {
       })
 
       expect(result.current.autoLogin.isAutoLoginEnabled).toBe(false)
-      expect(preferences.isAutoLoginEnabled).toBe(false)
+      expect(Preferences.instance.isAutoLoginEnabled).toBe(false)
     })
 
     it('usernameList', () => {
@@ -80,7 +83,7 @@ describe('usePreferences', () => {
       })
 
       expect(result.current.defaultUsername.defaultUsername).toBe('test2')
-      expect(preferences.defaultUsername).toBe('test2')
+      expect(Preferences.instance.defaultUsername).toBe('test2')
     })
 
     it('profilePassword', () => {
@@ -92,7 +95,7 @@ describe('usePreferences', () => {
       })
 
       expect(result.current.profilePassword.profilePassword).toBe('test2')
-      expect(preferences.profilePassword).toBe('test2')
+      expect(Preferences.instance.profilePassword).toBe('test2')
     })
 
     it('isStartNextEpisodeEnabled', () => {
@@ -104,7 +107,7 @@ describe('usePreferences', () => {
       })
 
       expect(result.current.startNextEpisode.isStartNextEpisodeEnabled).toBe(false)
-      expect(preferences.isStartNextEpisodeEnabled).toBe(false)
+      expect(Preferences.instance.isStartNextEpisodeEnabled).toBe(false)
     })
 
     it('isStartOverEpisodeEnabled', () => {
@@ -116,31 +119,17 @@ describe('usePreferences', () => {
       })
 
       expect(result.current.startOverEpisode.isStartOverEpisodeEnabled).toBe(false)
-      expect(preferences.isStartOverEpisodeEnabled).toBe(false)
+      expect(Preferences.instance.isStartOverEpisodeEnabled).toBe(false)
     })
   })
 
   describe('should update value when preferences value is changed of', () => {
-    // Initially reset the values to default.
-    // TODO: Create mock for preferences
-    beforeEach(() => {
-      preferences.isNetflixHotkeysEnabled = false
-      preferences.isSlowSeekEnabled = false
-      preferences.isPowerSkipEnabled = false
-      preferences.isAutoLoginEnabled = false
-      preferences.usernameList = []
-      preferences.defaultUsername = ''
-      preferences.profilePassword = ''
-      preferences.isStartNextEpisodeEnabled = false
-      preferences.isStartOverEpisodeEnabled = false
-    })
-
     it('isNetflixHotkeysEnabled', () => {
       const { result } = renderHook(() => usePreferences())
       expect(result.current.netflixHotkeys.isNetflixHotkeysEnabled).toBe(false)
 
       act(() => {
-        preferences.isNetflixHotkeysEnabled = true
+        Preferences.instance.isNetflixHotkeysEnabled = true
       })
 
       expect(result.current.netflixHotkeys.isNetflixHotkeysEnabled).toBe(true)
@@ -151,7 +140,7 @@ describe('usePreferences', () => {
       expect(result.current.autoLogin.isAutoLoginEnabled).toBe(false)
 
       act(() => {
-        preferences.isAutoLoginEnabled = true
+        Preferences.instance.isAutoLoginEnabled = true
       })
 
       expect(result.current.autoLogin.isAutoLoginEnabled).toBe(true)
@@ -162,7 +151,7 @@ describe('usePreferences', () => {
       expect(result.current.usernameList).toEqual([])
 
       act(() => {
-        preferences.usernameList = ['test']
+        Preferences.instance.usernameList = ['test']
       })
 
       expect(result.current.usernameList).toEqual(['test'])

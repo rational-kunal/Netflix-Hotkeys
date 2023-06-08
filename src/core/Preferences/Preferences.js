@@ -2,6 +2,14 @@ import { Storage } from '../Storage'
 
 class Preferences extends Storage {
   /**
+   * For auto-completion and intellisense.
+   * @type {Preferences}
+   */
+  static get instance() {
+    return super.instance
+  }
+
+  /**
    * Whether the Netflix Hotkeys extension is enabled.
    * @type {boolean}
    */
@@ -56,8 +64,7 @@ class Preferences extends Storage {
   isStartOverEpisodeEnabled = this.field(false)
 }
 
-const preferences = new Preferences()
-preferences.build()
-export default preferences
+// Build the instance early on so that the initial values are set correctly.
+Preferences.instance
 
-export { Preferences } // Exporting the Class for testing
+export default Preferences

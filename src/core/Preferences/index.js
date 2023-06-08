@@ -1,1 +1,1 @@
-export { default as preferences } from './Preferences'
+export { default as Preferences } from './Preferences'

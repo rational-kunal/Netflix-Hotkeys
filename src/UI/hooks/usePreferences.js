@@ -1,72 +1,76 @@
 import { useEffect, useState } from 'react'
-import { preferences } from '../../core/Preferences'
+import { Preferences } from '../../core/Preferences'
 
 // TODO: This is really inefficient. Check if there is a way to create a single hook.
 
 // Custom hook to get and set preferences
 // A layer between UI and core
 function usePreferences() {
-  const [isNetflixHotkeysEnabled, setIsNetflixHotkeysEnabled] = useState(preferences.isNetflixHotkeysEnabled)
-  const [isSlowSeekEnabled, setIsSlowSeekEnabled] = useState(preferences.isSlowSeekEnabled)
-  const [isPowerSkipEnabled, setIsPowerSkipEnabled] = useState(preferences.isPowerSkipEnabled)
-  const [isAutoLoginEnabled, setIsAutoLoginEnabled] = useState(preferences.isAutoLoginEnabled)
-  const [usernameList, setUsernameList] = useState(preferences.usernameList)
-  const [defaultUsername, setDefaultUsername] = useState(preferences.defaultUsername)
-  const [profilePassword, setProfilePassword] = useState(preferences.profilePassword)
-  const [isStartNextEpisodeEnabled, setIsStartNextEpisodeEnabled] = useState(preferences.isStartNextEpisodeEnabled)
-  const [isStartOverEpisodeEnabled, setIsStartOverEpisodeEnabled] = useState(preferences.isStartOverEpisodeEnabled)
+  const [isNetflixHotkeysEnabled, setIsNetflixHotkeysEnabled] = useState(Preferences.instance.isNetflixHotkeysEnabled)
+  const [isSlowSeekEnabled, setIsSlowSeekEnabled] = useState(Preferences.instance.isSlowSeekEnabled)
+  const [isPowerSkipEnabled, setIsPowerSkipEnabled] = useState(Preferences.instance.isPowerSkipEnabled)
+  const [isAutoLoginEnabled, setIsAutoLoginEnabled] = useState(Preferences.instance.isAutoLoginEnabled)
+  const [usernameList, setUsernameList] = useState(Preferences.instance.usernameList)
+  const [defaultUsername, setDefaultUsername] = useState(Preferences.instance.defaultUsername)
+  const [profilePassword, setProfilePassword] = useState(Preferences.instance.profilePassword)
+  const [isStartNextEpisodeEnabled, setIsStartNextEpisodeEnabled] = useState(
+    Preferences.instance.isStartNextEpisodeEnabled,
+  )
+  const [isStartOverEpisodeEnabled, setIsStartOverEpisodeEnabled] = useState(
+    Preferences.instance.isStartOverEpisodeEnabled,
+  )
 
   // Listen to changes in preferences
   // Currently we are listening to only required preferences to avoid unnecessary re-renders
   useEffect(() => {
-    const updateNetflixHotkeys = () => setIsNetflixHotkeysEnabled(preferences.isNetflixHotkeysEnabled)
-    preferences.on('isNetflixHotkeysEnabled', updateNetflixHotkeys)
-    return () => preferences.off('isNetflixHotkeysEnabled', updateNetflixHotkeys)
+    const updateNetflixHotkeys = () => setIsNetflixHotkeysEnabled(Preferences.instance.isNetflixHotkeysEnabled)
+    Preferences.instance.on('isNetflixHotkeysEnabled', updateNetflixHotkeys)
+    return () => Preferences.instance.off('isNetflixHotkeysEnabled', updateNetflixHotkeys)
   }, [])
 
   useEffect(() => {
-    const updateIsAutoLoginEnabled = () => setIsAutoLoginEnabled(preferences.isAutoLoginEnabled)
-    preferences.on('isAutoLoginEnabled', updateIsAutoLoginEnabled)
-    return () => preferences.off('isAutoLoginEnabled', updateIsAutoLoginEnabled)
+    const updateIsAutoLoginEnabled = () => setIsAutoLoginEnabled(Preferences.instance.isAutoLoginEnabled)
+    Preferences.instance.on('isAutoLoginEnabled', updateIsAutoLoginEnabled)
+    return () => Preferences.instance.off('isAutoLoginEnabled', updateIsAutoLoginEnabled)
   }, [])
 
   useEffect(() => {
-    const updateUsernameList = () => setUsernameList(preferences.usernameList)
-    preferences.on('usernameList', updateUsernameList)
-    return () => preferences.off('usernameList', updateUsernameList)
+    const updateUsernameList = () => setUsernameList(Preferences.instance.usernameList)
+    Preferences.instance.on('usernameList', updateUsernameList)
+    return () => Preferences.instance.off('usernameList', updateUsernameList)
   }, [])
 
   // Update respective preference when value is changed
   useEffect(() => {
-    preferences.isNetflixHotkeysEnabled = isNetflixHotkeysEnabled
+    Preferences.instance.isNetflixHotkeysEnabled = isNetflixHotkeysEnabled
   }, [isNetflixHotkeysEnabled])
 
   useEffect(() => {
-    preferences.isSlowSeekEnabled = isSlowSeekEnabled
+    Preferences.instance.isSlowSeekEnabled = isSlowSeekEnabled
   }, [isSlowSeekEnabled])
 
   useEffect(() => {
-    preferences.isPowerSkipEnabled = isPowerSkipEnabled
+    Preferences.instance.isPowerSkipEnabled = isPowerSkipEnabled
   }, [isPowerSkipEnabled])
 
   useEffect(() => {
-    preferences.isAutoLoginEnabled = isAutoLoginEnabled
+    Preferences.instance.isAutoLoginEnabled = isAutoLoginEnabled
   }, [isAutoLoginEnabled])
 
   useEffect(() => {
-    preferences.defaultUsername = defaultUsername
+    Preferences.instance.defaultUsername = defaultUsername
   }, [defaultUsername])
 
   useEffect(() => {
-    preferences.profilePassword = profilePassword
+    Preferences.instance.profilePassword = profilePassword
   }, [profilePassword])
 
   useEffect(() => {
-    preferences.isStartNextEpisodeEnabled = isStartNextEpisodeEnabled
+    Preferences.instance.isStartNextEpisodeEnabled = isStartNextEpisodeEnabled
   }, [isStartNextEpisodeEnabled])
 
   useEffect(() => {
-    preferences.isStartOverEpisodeEnabled = isStartOverEpisodeEnabled
+    Preferences.instance.isStartOverEpisodeEnabled = isStartOverEpisodeEnabled
   }, [isStartOverEpisodeEnabled])
 
   return {
