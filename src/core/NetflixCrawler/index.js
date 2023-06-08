@@ -94,6 +94,11 @@ let controls = {
   },
 
   /** @type {HTMLElement|undefined} */
+  get skipRecapButton() {
+    return document.querySelector("button[data-uia='player-skip-recap']")
+  },
+
+  /** @type {HTMLElement|undefined} */
   get skipToNextEpisodeButton() {
     return document.querySelector("button[data-uia='next-episode-seamless-button']")
   },

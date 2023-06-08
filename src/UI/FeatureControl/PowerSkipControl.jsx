@@ -3,7 +3,7 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import Switch from '@mui/material/Switch'
 import usePreferences from '../hooks/usePreferences'
 
-const Label = 'Power Skip (Intro, End Credits)'
+const Label = 'Power Skip (Intro, Recap and End Credits)'
 
 function PowerSkipControl() {
   const { isPowerSkipEnabled, setIsPowerSkipEnabled } = usePreferences().powerSkip

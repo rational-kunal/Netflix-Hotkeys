@@ -46,6 +46,7 @@ const passwordInputPageObserver = () => {
 const videoPlayerPageObserver = () => {
   if (Preferences.instance.isPowerSkipEnabled) {
     NetflixCrawler.controls.skipIntroButton?.click()
+    NetflixCrawler.controls.skipRecapButton?.click()
     NetflixCrawler.controls.skipToNextEpisodeButton?.click()
   }
 }
