@@ -79,6 +79,8 @@ describe('Preferences', () => {
         profilePassword: 'b',
         isStartNextEpisodeEnabled: true,
         isStartOverEpisodeEnabled: true,
+        isSubtitleToggleEnabled: true,
+        isAudioToggleEnabled: true,
       })
     })
 
@@ -95,6 +97,8 @@ describe('Preferences', () => {
         'profilePassword',
         'isStartNextEpisodeEnabled',
         'isStartOverEpisodeEnabled',
+        'isSubtitleToggleEnabled',
+        'isAudioToggleEnabled',
       ],
       expect.any(Function),
     )
@@ -108,6 +112,8 @@ describe('Preferences', () => {
     expect(Preferences.instance.profilePassword).toBe('b')
     expect(Preferences.instance.isStartNextEpisodeEnabled).toBe(true)
     expect(Preferences.instance.isStartOverEpisodeEnabled).toBe(true)
+    expect(Preferences.instance.isSubtitleToggleEnabled).toBe(true)
+    expect(Preferences.instance.isAudioToggleEnabled).toBe(true)
   })
 
   describe('should be able to set values to the chrome storage for', () => {
@@ -154,6 +160,16 @@ describe('Preferences', () => {
     it('isStartOverEpisodeEnabled', () => {
       Preferences.instance.isStartOverEpisodeEnabled = true
       expect(chrome.storage.local.set).toHaveBeenCalledWith({ isStartOverEpisodeEnabled: true })
+    })
+
+    it('isSubtitleToggleEnabled', () => {
+      Preferences.instance.isSubtitleToggleEnabled = true
+      expect(chrome.storage.local.set).toHaveBeenCalledWith({ isSubtitleToggleEnabled: true })
+    })
+
+    it('isAudioToggleEnabled', () => {
+      Preferences.instance.isAudioToggleEnabled = true
+      expect(chrome.storage.local.set).toHaveBeenCalledWith({ isAudioToggleEnabled: true })
     })
   })
 

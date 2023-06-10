@@ -46,3 +46,31 @@ describe('Auto Login form', () => {
     })
   })
 })
+
+describe('Subtitle Toggle form', () => {
+  it('is rendered in the FeatureControl', () => {
+    const { queryByText, queryByRole } = render(<FeatureControl />)
+
+    expect(queryByText('to toggle subtitles.')).toBeInTheDocument()
+    expect(queryByText('Toggle between english subtitle and no subtitle.')).toBeInTheDocument()
+    expect(
+      queryByRole('checkbox', {
+        name: /c to toggle subtitles\. toggle between english subtitle and no subtitle\./i,
+      }),
+    ).toBeInTheDocument()
+  })
+})
+
+describe('Audio Toggle form', () => {
+  it('is rendered in the FeatureControl', () => {
+    const { queryByText, queryByRole } = render(<FeatureControl />)
+
+    expect(queryByText('to toggle audio.')).toBeInTheDocument()
+    expect(queryByText('Toggle between english audio and original audio.')).toBeInTheDocument()
+    expect(
+      queryByRole('checkbox', {
+        name: /v to toggle audio\. toggle between english audio and original audio\./i,
+      }),
+    ).toBeInTheDocument()
+  })
+})

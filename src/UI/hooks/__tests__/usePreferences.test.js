@@ -15,6 +15,8 @@ describe('usePreferences', () => {
       Preferences.instance.profilePassword = 'test'
       Preferences.instance.isStartNextEpisodeEnabled = true
       Preferences.instance.isStartOverEpisodeEnabled = true
+      Preferences.instance.isSubtitleToggleEnabled = true
+      Preferences.instance.isAudioToggleEnabled = true
     })
 
     afterEach(() => {
@@ -120,6 +122,30 @@ describe('usePreferences', () => {
 
       expect(result.current.startOverEpisode.isStartOverEpisodeEnabled).toBe(false)
       expect(Preferences.instance.isStartOverEpisodeEnabled).toBe(false)
+    })
+
+    it('isSubtitleToggleEnabled', () => {
+      const { result } = renderHook(() => usePreferences())
+      expect(result.current.subtitleToggle.isSubtitleToggleEnabled).toBe(true)
+
+      act(() => {
+        result.current.subtitleToggle.setIsSubtitleToggleEnabled(false)
+      })
+
+      expect(result.current.subtitleToggle.isSubtitleToggleEnabled).toBe(false)
+      expect(Preferences.instance.isSubtitleToggleEnabled).toBe(false)
+    })
+
+    it('isAudioToggleEnabled', () => {
+      const { result } = renderHook(() => usePreferences())
+      expect(result.current.audioToggle.isAudioToggleEnabled).toBe(true)
+
+      act(() => {
+        result.current.audioToggle.setIsAudioToggleEnabled(false)
+      })
+
+      expect(result.current.audioToggle.isAudioToggleEnabled).toBe(false)
+      expect(Preferences.instance.isAudioToggleEnabled).toBe(false)
     })
   })
 

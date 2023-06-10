@@ -19,6 +19,8 @@ function usePreferences() {
   const [isStartOverEpisodeEnabled, setIsStartOverEpisodeEnabled] = useState(
     Preferences.instance.isStartOverEpisodeEnabled,
   )
+  const [isSubtitleToggleEnabled, setIsSubtitleToggleEnabled] = useState(Preferences.instance.isSubtitleToggleEnabled)
+  const [isAudioToggleEnabled, setIsAudioToggleEnabled] = useState(Preferences.instance.isAudioToggleEnabled)
 
   // Listen to changes in preferences
   // Currently we are listening to only required preferences to avoid unnecessary re-renders
@@ -73,6 +75,14 @@ function usePreferences() {
     Preferences.instance.isStartOverEpisodeEnabled = isStartOverEpisodeEnabled
   }, [isStartOverEpisodeEnabled])
 
+  useEffect(() => {
+    Preferences.instance.isSubtitleToggleEnabled = isSubtitleToggleEnabled
+  }, [isSubtitleToggleEnabled])
+
+  useEffect(() => {
+    Preferences.instance.isAudioToggleEnabled = isAudioToggleEnabled
+  }, [isAudioToggleEnabled])
+
   return {
     netflixHotkeys: { isNetflixHotkeysEnabled, setIsNetflixHotkeysEnabled },
     slowSeek: { isSlowSeekEnabled, setIsSlowSeekEnabled },
@@ -83,6 +93,8 @@ function usePreferences() {
     profilePassword: { profilePassword, setProfilePassword },
     startNextEpisode: { isStartNextEpisodeEnabled, setIsStartNextEpisodeEnabled },
     startOverEpisode: { isStartOverEpisodeEnabled, setIsStartOverEpisodeEnabled },
+    subtitleToggle: { isSubtitleToggleEnabled, setIsSubtitleToggleEnabled },
+    audioToggle: { isAudioToggleEnabled, setIsAudioToggleEnabled },
   }
 }
 

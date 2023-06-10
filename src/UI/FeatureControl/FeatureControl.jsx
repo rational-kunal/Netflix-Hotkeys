@@ -10,6 +10,8 @@ import ProfilePasswordControl from './ProfilePasswordControl'
 import SlowSeekControl from './SlowSeekControl'
 import StartNextEpisodeControl from './StartNextEpisodeControl'
 import StartOverEpisodeControl from './StartOverEpisodeControl'
+import SubtitleToggleControl from './SubtitleToggleControl'
+import AudioToggleControl from './AudioToggleControl'
 
 const Warning = (
   <Alert severity="info">
@@ -46,6 +48,8 @@ function FeatureControl() {
             {autoLoginFormOrWarning}
           </Box>
         </Box>
+        <SubtitleToggleControl />
+        <AudioToggleControl />
       </Stack>
     </Paper>
   )

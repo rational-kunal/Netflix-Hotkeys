@@ -62,6 +62,20 @@ class Preferences extends Storage {
    * @type {boolean}
    */
   isStartOverEpisodeEnabled = this.field(false)
+
+  /**
+   * Whether C to toggle subtitle is enabled.
+   * Toggle between English and Off.
+   * @type {boolean}
+   */
+  isSubtitleToggleEnabled = this.field(false)
+
+  /**
+   * Whether V to toggle audio is enabled.
+   * Toggle between English and Original.
+   * @type {boolean}
+   */
+  isAudioToggleEnabled = this.field(false)
 }
 
 // Build the instance early on so that the initial values are set correctly.
