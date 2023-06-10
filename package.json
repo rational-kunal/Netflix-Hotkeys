@@ -1,7 +1,7 @@
 {
   "name": "netflix-hotkeys",
   "author": "Kunal Kamble",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Unleash the epic binging frenzy with keyboard sorcery!",
   "type": "module",
   "license": "MIT",
