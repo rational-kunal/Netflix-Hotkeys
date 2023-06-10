@@ -7,30 +7,37 @@ import { Preferences } from '../core/Preferences'
  */
 function onUserInput(event) {
   if (event.key === 'a') {
-    NetflixController.seekBackward()
+    if (event.type === 'keydown' && event.repeat === false) {
+      NetflixController.playSlowest()
+    } else if (event.type === 'keyup') {
+      NetflixController.playNormal()
+    }
   } else if (event.key === 'd') {
-    NetflixController.seekForward()
-  } else if (event.key === 'n') {
+    if (event.type === 'keydown' && event.repeat === false) {
+      NetflixController.playFastest()
+    } else if (event.type === 'keyup') {
+      NetflixController.playNormal()
+    }
+  } else if (event.key === 'n' && event.type === 'keydown') {
     NetflixController.jumpToNextEpisode()
-  } else if (event.key === 'r') {
+  } else if (event.key === 'r' && event.type === 'keydown') {
     NetflixController.startOverEpisode()
-  } else if (event.key === 'v') {
+  } else if (event.key === 'v' && event.type === 'keydown') {
     NetflixController.toggleAudio()
-  } else if (event.key === 'c') {
+  } else if (event.key === 'c' && event.type === 'keydown') {
     NetflixController.toggleSubtitle()
   }
 }
 
 Preferences.instance.on('isNetflixHotkeysEnabled', () => {
   document.removeEventListener('keydown', onUserInput)
+  document.removeEventListener('keyup', onUserInput)
   NetflixController.stop()
 
   if (Preferences.instance.isNetflixHotkeysEnabled) {
     document.addEventListener('keydown', onUserInput)
+    document.addEventListener('keyup', onUserInput)
     NetflixController.start()
-  } else {
-    document.removeEventListener('keydown', onUserInput)
-    NetflixController.stop()
   }
 })
 

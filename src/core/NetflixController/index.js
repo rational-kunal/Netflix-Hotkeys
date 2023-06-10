@@ -149,6 +149,30 @@ function toggleAudio() {
   }
 }
 
+function playFastest() {
+  if (!Preferences.instance.isPowerSeekEnabled) {
+    return
+  }
+
+  Hotkeys.playFastest()
+}
+
+function playNormal() {
+  if (!Preferences.instance.isPowerSeekEnabled) {
+    return
+  }
+
+  Hotkeys.playNormal()
+}
+
+function playSlowest() {
+  if (!Preferences.instance.isPowerSeekEnabled) {
+    return
+  }
+
+  Hotkeys.playSlowest()
+}
+
 function callIfNetflixHotkeysEnabled(func) {
   return () => {
     if (Preferences.instance.isNetflixHotkeysEnabled) {
@@ -174,4 +198,7 @@ export default {
   startOverEpisode: callIfNetflixHotkeysEnabled(startOverEpisode),
   toggleSubtitle: callIfNetflixHotkeysEnabled(toggleSubtitle),
   toggleAudio: callIfNetflixHotkeysEnabled(toggleAudio),
+  playFastest: callIfNetflixHotkeysEnabled(playFastest),
+  playNormal: callIfNetflixHotkeysEnabled(playNormal),
+  playSlowest: callIfNetflixHotkeysEnabled(playSlowest),
 }

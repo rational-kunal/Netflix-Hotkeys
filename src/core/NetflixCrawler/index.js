@@ -152,6 +152,36 @@ let controls = {
   get selectedSubtitleOption() {
     return document.querySelector("li[data-uia*='subtitle-item-selected']")
   },
+
+  /** @type {HTMLElement|null} */
+  get speedControlButton() {
+    return document.querySelector("button[data-uia='control-speed']")
+  },
+
+  /** @type {HTMLElement|null} */
+  get speedControlMenu() {
+    return document.querySelector("div[data-uia='playback-speed']")
+  },
+
+  /** @type {HTMLElement[]} */
+  get speedControlOptions() {
+    return Array.from(document.querySelectorAll("div[data-uia*='playback-speed-item']"))
+  },
+
+  /** @type {HTMLElement|null} */
+  get slowestSpeedOption() {
+    return this.speedControlOptions[0]
+  },
+
+  /** @type {HTMLElement|null} */
+  get normalSpeedOption() {
+    return this.speedControlOptions.at(Math.floor(this.speedControlOptions.length / 2))
+  },
+
+  /** @type {HTMLElement|null} */
+  get fastestSpeedOption() {
+    return this.speedControlOptions.at(this.speedControlOptions.length - 1)
+  },
 }
 
 export default {

@@ -19,11 +19,6 @@ function toggleSubtitle() {
     NetflixCrawler.controls.controlAudioSubtitleButton.click()
 
     Executor.executeOrAddToQueue(() => {
-      console.assert(
-        NetflixCrawler.controls.controlAudioSubtitleMenu,
-        '[🎹] [Audio/Subtitle] Audio/Subtitle menu not opened',
-      )
-
       // 2. Click on the subtitle to select it.
       if (!NetflixCrawler.controls.controlAudioSubtitleMenu) {
         return false
@@ -31,10 +26,10 @@ function toggleSubtitle() {
 
       if (NetflixCrawler.controls.selectedSubtitleOption === NetflixCrawler.controls.englishSubtitleOption) {
         NetflixCrawler.controls.offSubtitleOption.click()
-        console.debug('[🎹] [Audio/Subtitle] selected off subtitle')
+        console.info('[🎹] [Audio/Subtitle] selected off subtitle')
       } else {
         NetflixCrawler.controls.englishSubtitleOption.click()
-        console.debug('[🎹] [Audio/Subtitle] selected english subtitle')
+        console.info('[🎹] [Audio/Subtitle] selected english subtitle')
       }
 
       // 3. Close the menu.
@@ -65,11 +60,6 @@ function toggleAudio() {
     NetflixCrawler.controls.controlAudioSubtitleButton.click()
 
     Executor.executeOrAddToQueue(() => {
-      console.assert(
-        NetflixCrawler.controls.controlAudioSubtitleMenu,
-        '[🎹] [Audio/Subtitle] Audio/Subtitle menu not opened',
-      )
-
       // 2. Click on the audio option to select it.
       if (!NetflixCrawler.controls.controlAudioSubtitleMenu) {
         return false
@@ -77,14 +67,122 @@ function toggleAudio() {
 
       if (NetflixCrawler.controls.selectedAudioOption === NetflixCrawler.controls.englishAudioOption) {
         NetflixCrawler.controls.originalAudioOption.click()
-        console.debug('[🎹] [Audio/Subtitle] selected original audio')
+        console.info('[🎹] [Audio/Subtitle] selected original audio')
       } else {
         NetflixCrawler.controls.englishAudioOption.click()
-        console.debug('[🎹] [Audio/Subtitle] selected english audio')
+        console.info('[🎹] [Audio/Subtitle] selected english audio')
       }
 
       // 3. Close the menu.
       _closeAudioSubtitleMenu()
+
+      return true
+    })
+
+    return true
+  })
+}
+
+/**
+ * Increases the playback speed to 1.5x
+ *
+ * The function will do the following:
+ * 1. Click on the speed control button to open the menu.
+ * 2. Click on the 1.5x option to select it.
+ * 3. Close the menu.
+ */
+function playFastest() {
+  Executor.executeOrAddToQueue(() => {
+    if (!NetflixCrawler.controls.speedControlButton) {
+      return false
+    }
+
+    // 1. Click on the speed control button to open the menu.
+    NetflixCrawler.controls.speedControlButton.click()
+
+    Executor.executeOrAddToQueue(() => {
+      if (!NetflixCrawler.controls.speedControlMenu) {
+        return false
+      }
+
+      // 2. Click on the 1.5x option to select it.
+      NetflixCrawler.controls.fastestSpeedOption.click()
+      console.info('[🎹] [Speed] selected fastest speed')
+
+      // 3. Close the menu.
+      _closeSpeedControlMenu()
+
+      return true
+    })
+
+    return true
+  })
+}
+
+/**
+ * Resets the playback speed to 1x.
+ *
+ * The function will do the following:
+ * 1. Click on the speed control button to open the menu.
+ * 2. Click on the 1x option to select it.
+ * 3. Close the menu.
+ */
+function playNormal() {
+  Executor.executeOrAddToQueue(() => {
+    if (!NetflixCrawler.controls.speedControlButton) {
+      return false
+    }
+
+    // 1. Click on the speed control button to open the menu.
+    NetflixCrawler.controls.speedControlButton.click()
+
+    Executor.executeOrAddToQueue(() => {
+      if (!NetflixCrawler.controls.speedControlMenu) {
+        return false
+      }
+
+      // 2. Click on the 1x option to select it.
+      NetflixCrawler.controls.normalSpeedOption.click()
+      console.info('[🎹] [Speed] selected normal speed')
+
+      // 3. Close the menu.
+      _closeSpeedControlMenu()
+
+      return true
+    })
+
+    return true
+  })
+}
+
+/**
+ * Decreases the playback speed to 0.5x.
+ *
+ * The function will do the following:
+ * 1. Click on the speed control button to open the menu.
+ * 2. Click on the 0.5x option to select it.
+ * 3. Close the menu.
+ */
+function playSlowest() {
+  Executor.executeOrAddToQueue(() => {
+    if (!NetflixCrawler.controls.speedControlButton) {
+      return false
+    }
+
+    // 1. Click on the speed control button to open the menu.
+    NetflixCrawler.controls.speedControlButton.click()
+
+    Executor.executeOrAddToQueue(() => {
+      if (!NetflixCrawler.controls.speedControlMenu) {
+        return false
+      }
+
+      // 2. Click on the 0.5x option to select it.
+      NetflixCrawler.controls.slowestSpeedOption.click()
+      console.info('[🎹] [Speed] selected slowest speed')
+
+      // 3. Close the menu.
+      _closeSpeedControlMenu()
 
       return true
     })
@@ -115,7 +213,32 @@ function _closeAudioSubtitleMenu() {
   NetflixCrawler.controls.controlAudioSubtitleButton.dispatchEvent(mouseMoveEvent)
 }
 
+function _closeSpeedControlMenu() {
+  // Escape key to dismiss the menu
+  const keyDownEvent = new KeyboardEvent('keydown', {
+    bubbles: true,
+    cancelable: true,
+    view: window,
+    key: 'Escape',
+    keyCode: 27,
+  })
+  NetflixCrawler.controls.speedControlMenu.dispatchEvent(keyDownEvent)
+
+  // Mouse move from the audio/subtitle option to dismiss the active state of the button
+  const mouseMoveEvent = new MouseEvent('mousemove', {
+    bubbles: true,
+    cancelable: true,
+    view: window,
+    clientX: 0,
+    clientY: 0,
+  })
+  NetflixCrawler.controls.speedControlButton.dispatchEvent(mouseMoveEvent)
+}
+
 export default {
   toggleSubtitle,
   toggleAudio,
+  playFastest,
+  playNormal,
+  playSlowest,
 }

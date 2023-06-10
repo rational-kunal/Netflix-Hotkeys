@@ -5,7 +5,7 @@ import NetflixCrawler from '../NetflixCrawler'
  * @type {Function[]}
  * TODO: Execution queue should have limited capacity
  */
-const _executionQueue = []
+let _executionQueue = []
 
 /**
  * Execute the function if it is not successful i.e. the function returns false then add it to the queue.
@@ -13,6 +13,12 @@ const _executionQueue = []
  * @param {Function} func
  */
 function executeOrAddToQueue(func) {
+  if (_executionQueue.length !== 0) {
+    _executionQueue.push(func)
+    console.info('[🔀] Added a function to the queue')
+    return
+  }
+
   const success = func()
   if (!success) {
     _executionQueue.push(func)
@@ -20,20 +26,20 @@ function executeOrAddToQueue(func) {
   }
 }
 
-function executeLastFunctionInQueue() {
-  const func = _executionQueue.pop()
+function executeFirstFunctionInQueue() {
+  const func = _executionQueue.shift()
   if (func) {
     const success = func()
     if (!success) {
-      _executionQueue.push(func)
+      _executionQueue.unshift(func)
       console.info('[🔀] Execution of a function was not successful')
     }
   }
 }
 
 NetflixCrawler.addChangeListener(() => {
-  // Execute the last function in the queue on DOM change
-  executeLastFunctionInQueue()
+  // Execute the first function (i.e. oldest) in the queue on DOM change
+  executeFirstFunctionInQueue()
 })
 
 export default {
