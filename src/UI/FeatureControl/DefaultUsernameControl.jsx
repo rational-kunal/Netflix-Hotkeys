@@ -12,7 +12,7 @@ function DefaultUsernameControl() {
   const { defaultUsername, setDefaultUsername } = preferences.defaultUsername
 
   return (
-    <FormControl fullWidth>
+    <FormControl size="small" fullWidth>
       <InputLabel> {Label} </InputLabel>
       <Select value={defaultUsername} label={Label} onChange={(e) => setDefaultUsername(e.target.value)}>
         {usernameList.map((username) => (

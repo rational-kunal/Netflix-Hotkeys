@@ -8,8 +8,8 @@ describe('Audio Toggle form', () => {
   it('is rendered correctly', () => {
     const { queryByText, queryByRole } = render(<AudioToggleControl />)
 
-    expect(queryByText('to toggle audio.')).toBeInTheDocument()
-    expect(queryByText('Toggle between english audio and original audio.')).toBeInTheDocument()
+    expect(queryByText('to toggle audio')).toBeInTheDocument()
+    expect(queryByText('Toggle between English and Original audio')).toBeInTheDocument()
     expect(queryByRole('checkbox')).toBeInTheDocument()
   })
 

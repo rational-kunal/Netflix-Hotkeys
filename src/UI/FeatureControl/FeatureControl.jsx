@@ -16,7 +16,7 @@ import AudioToggleControl from './AudioToggleControl'
 const Warning = (
   <Alert severity="info">
     <Typography variant="subtitle2">
-      Please open Netflix profile selection page to properly set up Auto Login feature.
+      Please open Netflix profile selection page to properly set up Auto Login feature
     </Typography>
   </Alert>
 )
@@ -27,7 +27,7 @@ function FeatureControl() {
 
   const autoLoginFormOrWarning =
     usernameList.length > 0 ? (
-      <Stack direction="row" spacing={1.5}>
+      <Stack direction="row" spacing={1}>
         <DefaultUsernameControl />
         <ProfilePasswordControl />
       </Stack>
@@ -44,7 +44,7 @@ function FeatureControl() {
         <PowerSkipControl />
         <Box>
           <AutoLoginControl />
-          <Box sx={{ mt: 1 }} hidden={!isAutoLoginEnabled}>
+          <Box sx={{ mt: 1.5 }} hidden={!isAutoLoginEnabled}>
             {autoLoginFormOrWarning}
           </Box>
         </Box>

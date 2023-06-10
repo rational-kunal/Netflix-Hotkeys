@@ -8,8 +8,8 @@ describe('Subtitle Toggle form', () => {
   it('is rendered correctly', () => {
     const { queryByText, queryByRole } = render(<SubtitleToggleControl />)
 
-    expect(queryByText('to toggle subtitles.')).toBeInTheDocument()
-    expect(queryByText('Toggle between english subtitle and no subtitle.')).toBeInTheDocument()
+    expect(queryByText('to toggle subtitles')).toBeInTheDocument()
+    expect(queryByText('Toggle between english subtitle and no subtitle')).toBeInTheDocument()
     expect(queryByRole('checkbox')).toBeInTheDocument()
   })
 

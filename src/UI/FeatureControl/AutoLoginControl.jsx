@@ -1,9 +1,16 @@
-import { Box } from '@mui/material'
+import { Box, Typography, Stack } from '@mui/material'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Switch from '@mui/material/Switch'
 import usePreferences from '../hooks/usePreferences'
 
-const Label = 'Auto Login'
+const Label = (
+  <Stack>
+    <Typography> Auto Login </Typography>
+    <Typography variant="caption">
+      Automatically login to the specified profile with the password (if needed)
+    </Typography>
+  </Stack>
+)
 
 function AutoLoginControl() {
   const { isAutoLoginEnabled, setIsAutoLoginEnabled } = usePreferences().autoLogin
@@ -11,9 +18,8 @@ function AutoLoginControl() {
   return (
     <Box>
       <FormControlLabel
-        value={Label}
-        control={<Switch checked={isAutoLoginEnabled} onChange={() => setIsAutoLoginEnabled(!isAutoLoginEnabled)} />}
         label={Label}
+        control={<Switch checked={isAutoLoginEnabled} onChange={() => setIsAutoLoginEnabled(!isAutoLoginEnabled)} />}
       />
     </Box>
   )

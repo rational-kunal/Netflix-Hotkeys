@@ -7,9 +7,9 @@ import Typography from '@mui/material/Typography'
 const Label = (
   <Stack>
     <Typography>
-      <kbd>V</kbd> to toggle audio.
+      <kbd>V</kbd> to toggle audio
     </Typography>
-    <Typography variant="caption">Toggle between english audio and original audio.</Typography>
+    <Typography variant="caption">Toggle between English and Original audio</Typography>
   </Stack>
 )
 

@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography'
 
 const Label = (
   <Typography>
-    <kbd>N</kbd> to next episode.
+    <kbd>N</kbd> to next episode
   </Typography>
 )
 

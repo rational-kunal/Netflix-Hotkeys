@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography'
 
 const Label = (
   <Typography>
-    <kbd>R</kbd> to start over the episode.
+    <kbd>R</kbd> to start over the episode
   </Typography>
 )
 

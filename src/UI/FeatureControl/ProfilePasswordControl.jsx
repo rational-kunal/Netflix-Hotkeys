@@ -9,7 +9,7 @@ function ProfilePasswordControl() {
   const { profilePassword, setProfilePassword } = usePreferences().profilePassword
 
   return (
-    <FormControl variant="outlined" fullWidth>
+    <FormControl variant="outlined" size="small" fullWidth>
       <InputLabel>{Label}</InputLabel>
       <OutlinedInput
         type="password"

@@ -7,9 +7,9 @@ import Typography from '@mui/material/Typography'
 const Label = (
   <Stack>
     <Typography>
-      <kbd>C</kbd> to toggle subtitles.
+      <kbd>C</kbd> to toggle subtitles
     </Typography>
-    <Typography variant="caption">Toggle between english subtitle and no subtitle.</Typography>
+    <Typography variant="caption">Toggle between english subtitle and no subtitle</Typography>
   </Stack>
 )
 
