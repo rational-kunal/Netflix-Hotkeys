@@ -7,7 +7,7 @@ import AutoLoginControl from './AutoLoginControl'
 import DefaultUsernameControl from './DefaultUsernameControl'
 import PowerSkipControl from './PowerSkipControl'
 import ProfilePasswordControl from './ProfilePasswordControl'
-import SlowSeekControl from './SlowSeekControl'
+import PowerSeekControl from './PowerSeekControl'
 import StartNextEpisodeControl from './StartNextEpisodeControl'
 import StartOverEpisodeControl from './StartOverEpisodeControl'
 import SubtitleToggleControl from './SubtitleToggleControl'
@@ -38,7 +38,7 @@ function FeatureControl() {
   return (
     <Paper elevation={1} sx={{ p: 2 }}>
       <Stack direction="column" spacing={1.5} divider={<Divider variant="middle" />}>
-        <SlowSeekControl />
+        <PowerSeekControl />
         <StartOverEpisodeControl />
         <StartNextEpisodeControl />
         <PowerSkipControl />

@@ -8,6 +8,7 @@ describe('usePreferences', () => {
     beforeEach(() => {
       Preferences.instance.isNetflixHotkeysEnabled = true
       Preferences.instance.isSlowSeekEnabled = true
+      Preferences.instance.isPowerSeekEnabled = true
       Preferences.instance.isPowerSkipEnabled = true
       Preferences.instance.isAutoLoginEnabled = true
       Preferences.instance.usernameList = ['test']
@@ -45,6 +46,18 @@ describe('usePreferences', () => {
 
       expect(result.current.slowSeek.isSlowSeekEnabled).toBe(false)
       expect(Preferences.instance.isSlowSeekEnabled).toBe(false)
+    })
+
+    it('isPowerSeekEnabled', () => {
+      const { result } = renderHook(() => usePreferences())
+      expect(result.current.powerSeek.isPowerSeekEnabled).toBe(true)
+
+      act(() => {
+        result.current.powerSeek.setIsPowerSeekEnabled(false)
+      })
+
+      expect(result.current.powerSeek.isPowerSeekEnabled).toBe(false)
+      expect(Preferences.instance.isPowerSeekEnabled).toBe(false)
     })
 
     it('isPowerSkipEnabled', () => {

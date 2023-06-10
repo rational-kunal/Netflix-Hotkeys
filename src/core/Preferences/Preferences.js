@@ -18,8 +18,17 @@ class Preferences extends Storage {
   /**
    * Whether A/D to seek is enabled.
    * @type {boolean}
+   * @deprecated
    */
   isSlowSeekEnabled = this.field(false)
+
+  /**
+   * Whether power seek is enabled.
+   *  - D to play with 1.5x speed.
+   *  - A to play with 0.5x speed.
+   * @type {boolean}
+   */
+  isPowerSeekEnabled = this.field(false)
 
   /**
    * Whether power skip (intro and outro) is enabled.

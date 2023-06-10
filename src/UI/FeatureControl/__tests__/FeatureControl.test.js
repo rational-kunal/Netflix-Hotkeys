@@ -74,3 +74,17 @@ describe('Audio Toggle form', () => {
     ).toBeInTheDocument()
   })
 })
+
+describe('Power Seek form', () => {
+  it('is rendered in the FeatureControl', () => {
+    const { queryByText, queryByRole } = render(<FeatureControl />)
+
+    expect(queryByText(/and to slow down and speed up/i)).toBeInTheDocument()
+    expect(queryByText('Hold the buttons to speed up by 1.5x or slow down by 0.5x')).toBeInTheDocument()
+    expect(
+      queryByRole('checkbox', {
+        name: /a and d to slow down and speed up hold the buttons to speed up by 1\.5x or slow down by 0\.5x/i,
+      }),
+    ).toBeInTheDocument()
+  })
+})

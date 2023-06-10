@@ -8,6 +8,7 @@ import { Preferences } from '../../core/Preferences'
 function usePreferences() {
   const [isNetflixHotkeysEnabled, setIsNetflixHotkeysEnabled] = useState(Preferences.instance.isNetflixHotkeysEnabled)
   const [isSlowSeekEnabled, setIsSlowSeekEnabled] = useState(Preferences.instance.isSlowSeekEnabled)
+  const [isPowerSeekEnabled, setIsPowerSeekEnabled] = useState(Preferences.instance.isPowerSeekEnabled)
   const [isPowerSkipEnabled, setIsPowerSkipEnabled] = useState(Preferences.instance.isPowerSkipEnabled)
   const [isAutoLoginEnabled, setIsAutoLoginEnabled] = useState(Preferences.instance.isAutoLoginEnabled)
   const [usernameList, setUsernameList] = useState(Preferences.instance.usernameList)
@@ -52,6 +53,10 @@ function usePreferences() {
   }, [isSlowSeekEnabled])
 
   useEffect(() => {
+    Preferences.instance.isPowerSeekEnabled = isPowerSeekEnabled
+  }, [isPowerSeekEnabled])
+
+  useEffect(() => {
     Preferences.instance.isPowerSkipEnabled = isPowerSkipEnabled
   }, [isPowerSkipEnabled])
 
@@ -86,6 +91,7 @@ function usePreferences() {
   return {
     netflixHotkeys: { isNetflixHotkeysEnabled, setIsNetflixHotkeysEnabled },
     slowSeek: { isSlowSeekEnabled, setIsSlowSeekEnabled },
+    powerSeek: { isPowerSeekEnabled, setIsPowerSeekEnabled },
     powerSkip: { isPowerSkipEnabled, setIsPowerSkipEnabled },
     autoLogin: { isAutoLoginEnabled, setIsAutoLoginEnabled },
     usernameList: usernameList,

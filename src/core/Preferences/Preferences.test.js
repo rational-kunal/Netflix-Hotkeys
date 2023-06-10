@@ -11,6 +11,7 @@ describe('Preferences', () => {
   it('should have correct initial values of the fields', () => {
     expect(Preferences.instance.isNetflixHotkeysEnabled).toBe(false)
     expect(Preferences.instance.isSlowSeekEnabled).toBe(false)
+    expect(Preferences.instance.isPowerSeekEnabled).toBe(false)
     expect(Preferences.instance.isPowerSkipEnabled).toBe(false)
     expect(Preferences.instance.isAutoLoginEnabled).toBe(false)
     expect(Preferences.instance.usernameList).toEqual([])
@@ -29,6 +30,11 @@ describe('Preferences', () => {
     it('isSlowSeekEnabled', () => {
       Preferences.instance.isSlowSeekEnabled = true
       expect(Preferences.instance.isSlowSeekEnabled).toBe(true)
+    })
+
+    it('isPowerSeekEnabled', () => {
+      Preferences.instance.isPowerSeekEnabled = true
+      expect(Preferences.instance.isPowerSeekEnabled).toBe(true)
     })
 
     it('isPowerSkipEnabled', () => {
@@ -72,6 +78,7 @@ describe('Preferences', () => {
       callback({
         isNetflixHotkeysEnabled: true,
         isSlowSeekEnabled: true,
+        isPowerSeekEnabled: true,
         isPowerSkipEnabled: true,
         isAutoLoginEnabled: true,
         usernameList: ['a', 'b', 'c'],
@@ -90,6 +97,7 @@ describe('Preferences', () => {
       [
         'isNetflixHotkeysEnabled',
         'isSlowSeekEnabled',
+        'isPowerSeekEnabled',
         'isPowerSkipEnabled',
         'isAutoLoginEnabled',
         'usernameList',
@@ -125,6 +133,11 @@ describe('Preferences', () => {
     it('isSlowSeekEnabled', () => {
       Preferences.instance.isSlowSeekEnabled = true
       expect(chrome.storage.local.set).toHaveBeenCalledWith({ isSlowSeekEnabled: true })
+    })
+
+    it('isPowerSeekEnabled', () => {
+      Preferences.instance.isPowerSeekEnabled = true
+      expect(chrome.storage.local.set).toHaveBeenCalledWith({ isPowerSeekEnabled: true })
     })
 
     it('isPowerSkipEnabled', () => {
