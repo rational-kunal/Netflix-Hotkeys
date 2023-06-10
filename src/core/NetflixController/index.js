@@ -1,6 +1,7 @@
 import { Preferences } from '../Preferences'
 import NetflixCrawler, { Page } from '../NetflixCrawler'
 import Executor from './Executor'
+import Hotkeys from './Hotkeys'
 
 /**
  * User Selection Observer
@@ -136,6 +137,18 @@ function startOverEpisode() {
   })
 }
 
+function toggleSubtitle() {
+  if (Preferences.instance.isSubtitleToggleEnabled) {
+    Hotkeys.toggleSubtitle()
+  }
+}
+
+function toggleAudio() {
+  if (Preferences.instance.isAudioToggleEnabled) {
+    Hotkeys.toggleAudio()
+  }
+}
+
 function callIfNetflixHotkeysEnabled(func) {
   return () => {
     if (Preferences.instance.isNetflixHotkeysEnabled) {
@@ -159,4 +172,6 @@ export default {
   seekBackward: callIfNetflixHotkeysEnabled(seekBackward),
   jumpToNextEpisode: callIfNetflixHotkeysEnabled(jumpToNextEpisode),
   startOverEpisode: callIfNetflixHotkeysEnabled(startOverEpisode),
+  toggleSubtitle: callIfNetflixHotkeysEnabled(toggleSubtitle),
+  toggleAudio: callIfNetflixHotkeysEnabled(toggleAudio),
 }

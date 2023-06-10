@@ -14,6 +14,10 @@ function onUserInput(event) {
     NetflixController.jumpToNextEpisode()
   } else if (event.key === 'r') {
     NetflixController.startOverEpisode()
+  } else if (event.key === 'v') {
+    NetflixController.toggleAudio()
+  } else if (event.key === 'c') {
+    NetflixController.toggleSubtitle()
   }
 }
 

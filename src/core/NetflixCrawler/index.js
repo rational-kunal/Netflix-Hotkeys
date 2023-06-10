@@ -68,49 +68,89 @@ let controls = {
     return guessPage()
   },
 
-  /** @type {NodeListOf<HTMLElement>|undefined} */
+  /** @type {NodeListOf<HTMLElement>|null} */
   get profileNameEls() {
     return document.querySelectorAll('span.profile-name')
   },
 
-  /** @type {HTMLElement|undefined} */
+  /** @type {HTMLElement|null} */
   get profilePasswordInput() {
     return document.querySelector("input[data-uia='pin-number-0']")
   },
 
-  /** @type {HTMLElement|undefined} */
+  /** @type {HTMLElement|null} */
   get backSeekButton() {
     return document.querySelector("button[data-uia='control-back10']")
   },
 
-  /** @type {HTMLElement|undefined} */
+  /** @type {HTMLElement|null} */
   get forwardSeekButton() {
     return document.querySelector("button[data-uia='control-forward10']")
   },
 
-  /** @type {HTMLElement|undefined} */
+  /** @type {HTMLElement|null} */
   get skipIntroButton() {
     return document.querySelector("button[data-uia='player-skip-intro']")
   },
 
-  /** @type {HTMLElement|undefined} */
+  /** @type {HTMLElement|null} */
   get skipRecapButton() {
     return document.querySelector("button[data-uia='player-skip-recap']")
   },
 
-  /** @type {HTMLElement|undefined} */
+  /** @type {HTMLElement|null} */
   get skipToNextEpisodeButton() {
     return document.querySelector("button[data-uia='next-episode-seamless-button']")
   },
 
-  /** @type {HTMLElement|undefined} */
+  /** @type {HTMLElement|null} */
   get nextEpisodeButton() {
     return document.querySelector("button[data-uia='control-next']")
   },
 
-  /** @type {HTMLElement|undefined} */
+  /** @type {HTMLElement|null} */
   get timeline() {
     return document.querySelector("div[data-uia='timeline']")
+  },
+
+  /** @type {HTMLElement|null} */
+  get controlAudioSubtitleButton() {
+    return document.querySelector("button[data-uia='control-audio-subtitle']")
+  },
+
+  /** @type {HTMLElement|null} */
+  get controlAudioSubtitleMenu() {
+    return document.querySelector("div[data-uia='selector-audio-subtitle']")
+  },
+
+  /** @type {HTMLElement[]} */
+  get englishAudioOption() {
+    return document.querySelector("li[data-uia*='audio-item'][data-uia*='english' i]")
+  },
+
+  /** @type {HTMLElement|null} */
+  get originalAudioOption() {
+    return document.querySelector("li[data-uia*='audio-item'][data-uia*='original' i]")
+  },
+
+  /** @type {HTMLElement|null} */
+  get selectedAudioOption() {
+    return document.querySelector("li[data-uia*='audio-item-selected']")
+  },
+
+  /** @type {HTMLElement|null} */
+  get englishSubtitleOption() {
+    return document.querySelector("li[data-uia*='subtitle-item'][data-uia*='english' i]")
+  },
+
+  /** @type {HTMLElement|null} */
+  get offSubtitleOption() {
+    return document.querySelector("li[data-uia*='subtitle-item'][data-uia*='Off' i]")
+  },
+
+  /** @type {HTMLElement|null} */
+  get selectedSubtitleOption() {
+    return document.querySelector("li[data-uia*='subtitle-item-selected']")
   },
 }
 
