@@ -17,13 +17,11 @@ export default defineConfig(({ mode }) => {
           chunkFileNames: 'assets/chunk-[hash].js',
         },
       },
-      minify: mode === 'production' ? 'terser' : false,
-      terserOptions: {
-        compress: {
-          drop_console: mode === 'production',
-          drop_debugger: mode === 'production',
-        },
-      },
+      minify: 'esbuild',
+    },
+
+    esbuild: {
+      drop: mode === 'production' ? ['console', 'debugger'] : [],
     },
 
     plugins: [crx({ manifest }), react()],
