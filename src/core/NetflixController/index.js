@@ -8,6 +8,10 @@ import Hotkeys from './Hotkeys'
  * Observes the user selection page and selects the default user if auto login is enabled.
  */
 const userSelectionPageObserver = () => {
+  if (!Preferences.instance.isAutoLoginEnabled) {
+    return
+  }
+
   let defaultUsernameEl = undefined
   const usernames = []
   for (const usernameEl of NetflixCrawler.controls.profileNameEls) {
@@ -27,6 +31,10 @@ const userSelectionPageObserver = () => {
  * Detail: Copy pastes the password to the first input field.
  */
 const passwordInputPageObserver = () => {
+  if (!Preferences.instance.isAutoLoginEnabled) {
+    return
+  }
+
   const password = Preferences.instance.profilePassword
   if (!password && password.length !== 4 && isNaN(password)) {
     return
