@@ -4,6 +4,9 @@ import '@testing-library/jest-dom'
 import { Preferences } from '../../../core/Preferences'
 import { act } from 'react-dom/test-utils'
 
+const warningTextRegEx = /please open netflix to properly set up auto login feature/i
+const warningLinkRegEx = /profile selection page/i
+
 describe('Auto Login form', () => {
   afterEach(() => {
     Preferences.reset()
@@ -12,37 +15,40 @@ describe('Auto Login form', () => {
   describe('warning', () => {
     it('should appear if usernameList is empty', () => {
       Preferences.instance.usernameList = []
-      const { getByText } = render(<FeatureControl />)
+      const { queryByText } = render(<FeatureControl />)
 
-      expect(
-        getByText('Please open Netflix profile selection page to properly set up Auto Login feature'),
-      ).toBeInTheDocument()
+      expect(queryByText(warningTextRegEx)).toBeInTheDocument()
+      expect(queryByText(warningLinkRegEx)).toBeInTheDocument()
     })
 
     it('should not appear if usernameList is not empty', () => {
       Preferences.instance.usernameList = ['test']
       const { queryByText } = render(<FeatureControl />)
 
-      expect(
-        queryByText('Please open Netflix profile selection page to properly set up Auto Login feature'),
-      ).not.toBeInTheDocument()
+      expect(queryByText(warningTextRegEx)).not.toBeInTheDocument()
+      expect(queryByText(warningLinkRegEx)).not.toBeInTheDocument()
     })
 
     it('should disappear when usernameList is updated', () => {
       Preferences.instance.usernameList = []
       const { queryByText } = render(<FeatureControl />)
 
-      expect(
-        queryByText('Please open Netflix profile selection page to properly set up Auto Login feature'),
-      ).toBeInTheDocument()
+      expect(queryByText(warningTextRegEx)).toBeInTheDocument()
+      expect(queryByText(warningLinkRegEx)).toBeInTheDocument()
 
       act(() => {
         Preferences.instance.usernameList = ['test']
       })
 
-      expect(
-        queryByText('Please open Netflix profile selection page to properly set up Auto Login feature'),
-      ).not.toBeInTheDocument()
+      expect(queryByText(warningTextRegEx)).not.toBeInTheDocument()
+      expect(queryByText(warningLinkRegEx)).not.toBeInTheDocument()
+    })
+
+    it('should point to correct link', () => {
+      const { queryByText } = render(<FeatureControl />)
+
+      expect(queryByText(warningLinkRegEx)).toHaveAttribute('href', 'https://www.netflix.com/profiles')
+      expect(queryByText(warningLinkRegEx)).toHaveAttribute('target', '_blank')
     })
   })
 })

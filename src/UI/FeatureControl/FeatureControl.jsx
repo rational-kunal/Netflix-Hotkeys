@@ -1,4 +1,4 @@
-import { Alert, Box, Paper } from '@mui/material'
+import { Alert, Box, Paper, Link } from '@mui/material'
 import Divider from '@mui/material/Divider'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
@@ -16,7 +16,11 @@ import AudioToggleControl from './AudioToggleControl'
 const Warning = (
   <Alert severity="info">
     <Typography variant="subtitle2">
-      Please open Netflix profile selection page to properly set up Auto Login feature
+      Please open Netflix{' '}
+      <Link href="https://www.netflix.com/profiles" target="_blank">
+        profile selection page
+      </Link>{' '}
+      to properly set up Auto Login feature
     </Typography>
   </Alert>
 )
