@@ -91,7 +91,7 @@ describe('Preferences', () => {
       })
     })
 
-    Preferences.instance // // Access once to build the storage
+    Preferences.instance // Access once to build the storage
 
     expect(chrome.storage.local.get).toHaveBeenCalledWith(
       [

@@ -4,12 +4,9 @@ import { chrome } from '../../testing/ChromeMock'
 
 // Demo storage class used for testing
 class Demo extends Storage {
-  constructor() {
-    super()
-  }
-
-  x = this.field(0)
-  y = this.field(0)
+  x = this.field({ fallback: 0 })
+  y = this.field({ fallback: 0 })
+  noFallback = this.field()
 
   /**
    * For auto-complete and intellisense
@@ -58,7 +55,7 @@ describe('Demo Storage', () => {
     })
 
     Demo.instance // Access once to build the storage
-    expect(chrome.storage.local.get).toHaveBeenCalledWith(['x', 'y'], expect.any(Function))
+    expect(chrome.storage.local.get).toHaveBeenCalledWith(['x', 'y', 'noFallback'], expect.any(Function))
     expect(Demo.instance.x).toBe(4)
     expect(Demo.instance.y).toBe(5)
   })
@@ -133,6 +130,6 @@ describe('Demo Storage', () => {
     Demo.instance.x = 4
     Demo.instance.y = 5
 
-    expect(Demo.instance.all).toEqual({ x: 4, y: 5 })
+    expect(Demo.instance.values).toEqual({ x: 4, y: 5, noFallback: null })
   })
 })

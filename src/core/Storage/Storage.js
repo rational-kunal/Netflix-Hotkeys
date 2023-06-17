@@ -1,125 +1,142 @@
-/** A Storage class which creates a super simple API to talk with chrome storage. */
+/**
+ * A Storage class which creates a super simple API to talk with chrome storage.
+ */
 class Storage {
-  /** Marks the property as storage field */
-  field(initialValue = undefined) {
+  /**
+   * Marks the property as storage field.
+   *
+   * @param {Object} props
+   * @param {any} props.fallback The fallback value of the field if no value is found in chrome storage.
+   */
+  field(props = {}) {
     return {
       field: true,
-      initialValue,
+      fallback: props.fallback ?? null,
     }
   }
 
-  /**
-   * Shadow storage
-   * @private
-   */
-  _shadowStorage = {}
+  /** Shadow storage which maintains the values of the fields. */
+  #shadowStorage = {}
 
   /**
-   * Builds the storage
-   * @private
+   * values of the fields.
    */
-  build() {
+  get values() {
+    return this.#shadowStorage
+  }
+
+  /** Builds the storage class. */
+  #build() {
+    // Populate the shadow storage with the field values.
     const fields = Object.keys(this).filter((k) => this[k].field === true)
-    fields.forEach((f) => (this._shadowStorage[f] = this[f].initialValue))
+    fields.forEach((f) => (this.#shadowStorage[f] = this[f].fallback ?? null))
 
-    const changeField = (field, newValue) => {
+    const updateFieldAndNotify = (field, newValue) => {
       if (newValue === this[field]) {
         return
       }
 
-      this._shadowStorage[field] = newValue
+      this.#shadowStorage[field] = newValue
       chrome.storage.local.set({ [field]: newValue })
-      this.emit(field)
+      this.#emit(field)
     }
 
-    // Initialize values from chrome storage
+    // Initialize values from chrome storage.
     chrome.storage.local.get(fields, (result) => {
-      for (const field of fields) {
-        changeField(field, result[field] || this._shadowStorage[field])
-      }
+      fields.forEach((field) => {
+        updateFieldAndNotify(field, result[field] ?? this.#shadowStorage[field])
+      })
     })
 
-    // Listen for changes to values
+    // Listen for changes to values.
     chrome.storage.onChanged.addListener((changes, namespace) => {
       for (const field in changes) {
-        changeField(field, changes[field].newValue)
+        updateFieldAndNotify(field, changes[field].newValue)
       }
     })
 
-    // Override the getter's and setter's of the field
-    for (const field of fields) {
+    // Override the getter's and setter's of the field.
+    fields.forEach((field) => {
       Object.defineProperty(this, field, {
         get: function () {
-          return this._shadowStorage[field]
+          return this.#shadowStorage[field]
         },
         set: function (newValue) {
-          changeField(field, newValue)
+          updateFieldAndNotify(field, newValue)
         },
       })
+    })
+  }
+
+  /** The singleton instance */
+  static #instance = null
+
+  /**
+   * The singleton instance of the Storage.
+   *
+   * NOTE: Override in child class to enable Auto Complete and intellisense.
+   *
+   * @type {Storage}
+   */
+  static get instance() {
+    if (!Storage.#instance) {
+      const subClassStorage = new this()
+      subClassStorage.#build()
+      Storage.#instance = subClassStorage
     }
+
+    return Storage.#instance
   }
 
-  /** Returns values of all the fields. Can be used for debugging purposes. */
-  get all() {
-    return this._shadowStorage
+  /**
+   * Resets the singleton instance.
+   *
+   * WARN: ONLY EXPOSED FOR TESTING. SHOULD NOT BE USED IN THE NON-TESTING CODE.
+   */
+  static reset() {
+    Storage.#instance = null
   }
 
-  /** @private */
-  _listeners = {}
+  /** Listeners for fields */
+  #listeners = {}
 
   /**
    * Listen to changes of a field.
+   *
    * @param {String} fieldToListen
    * @param {Function} callback function to be called when the field changes.
    */
   on(fieldToListen, callback) {
-    if (!this._listeners[fieldToListen]) {
-      this._listeners[fieldToListen] = []
+    if (!this.#listeners[fieldToListen]) {
+      this.#listeners[fieldToListen] = []
     }
-    this._listeners[fieldToListen].push(callback)
+
+    this.#listeners[fieldToListen].push(callback)
   }
 
-  /** @private */
-  emit(changedField) {
-    if (!this._listeners[changedField]) {
+  /**
+   * Remove a listener from a field.
+   * @param {String} fieldToListen
+   * @param {Function} callback function to be removed from the listeners.
+   * @returns
+   */
+  off(fieldToListen, callback) {
+    if (!this.#listeners[fieldToListen]) {
       return
     }
-    for (const callback of this._listeners[changedField]) {
+
+    this.#listeners[fieldToListen] = this.#listeners[fieldToListen].filter((c) => c !== callback)
+  }
+
+  /** Emit a change to the listeners of a field. */
+  #emit(changedField) {
+    if (!this.#listeners[changedField]) {
+      return
+    }
+
+    for (const callback of this.#listeners[changedField]) {
       callback()
     }
-  }
-
-  off(fieldToListen, callback) {
-    if (!this._listeners[fieldToListen]) {
-      return
-    }
-    this._listeners[fieldToListen] = this._listeners[fieldToListen].filter((c) => c !== callback)
-  }
-
-  /** @private */
-  static _instance = null
-
-  /**
-   * The shared instance. This is a singleton.
-   * Type is the current child class of Storage.
-   * @type {Storage}
-   * @public
-   */
-  static get instance() {
-    if (!Storage._instance) {
-      const subClassStorage = new this()
-      subClassStorage.build()
-      Storage._instance = subClassStorage
-    }
-    return Storage._instance
-  }
-
-  /**
-   * Only exposed for testing.
-   * NOTE: SHOULD NOT BE USED IN IMPLEMENTATION.
-   */
-  static reset() {
-    Storage._instance = null
   }
 }
 
