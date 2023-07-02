@@ -1,5 +1,10 @@
 import NetflixController from '../core/NetflixController'
 import { Preferences } from '../core/Preferences'
+import { insertContentToastManagerToDOM } from '../UI/ContentToastManager'
+
+// Add the Content Toast Manager to the DOM. This should be done only once.
+// This is done irrespective of the user's preference to enable/disable Netflix Hotkeys.
+insertContentToastManagerToDOM()
 
 /**
  * Takes action on the user input

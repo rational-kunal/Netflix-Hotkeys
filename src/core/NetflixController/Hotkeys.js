@@ -1,3 +1,4 @@
+import { HotkeysEvent, HotkeysEventType, eventManager } from '../EventManager'
 import NetflixCrawler from '../NetflixCrawler'
 import Executor from './Executor'
 
@@ -112,6 +113,8 @@ function playFastest() {
       // 3. Close the menu.
       _closeSpeedControlMenu()
 
+      eventManager.activeEvent = new HotkeysEvent(HotkeysEventType.PLAY_SPEED_FASTEST)
+
       return true
     })
 
@@ -148,6 +151,8 @@ function playNormal() {
       // 3. Close the menu.
       _closeSpeedControlMenu()
 
+      eventManager.activeEvent = new HotkeysEvent(HotkeysEventType.PLAY_SPEED_NORMAL)
+
       return true
     })
 
@@ -183,6 +188,8 @@ function playSlowest() {
 
       // 3. Close the menu.
       _closeSpeedControlMenu()
+
+      eventManager.activeEvent = new HotkeysEvent(HotkeysEventType.PLAY_SPEED_SLOWEST)
 
       return true
     })
