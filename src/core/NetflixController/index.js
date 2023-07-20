@@ -53,6 +53,8 @@ const passwordInputPageObserver = () => {
  * Also, stores the reference to the buttons for seeking forward and backward.
  */
 const videoPlayerPageObserver = () => {
+  Hotkeys.insertContentToastManager()
+
   if (Preferences.instance.isPowerSkipEnabled) {
     NetflixCrawler.controls.skipIntroButton?.click()
     NetflixCrawler.controls.skipRecapButton?.click()

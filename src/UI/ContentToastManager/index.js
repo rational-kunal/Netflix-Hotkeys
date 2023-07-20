@@ -1,2 +1,2 @@
 export { default as ContentToastManager } from './ContentToastManager'
-export { default as insertContentToastManagerToDOM } from './insertToDom'
+export { default as insertContentToastManagerToRoot } from './insertToDom'

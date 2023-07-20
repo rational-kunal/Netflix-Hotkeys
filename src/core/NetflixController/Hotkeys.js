@@ -1,6 +1,29 @@
+import { createRoot } from 'react-dom/client'
 import { HotkeysEvent, HotkeysEventType, eventManager } from '../EventManager'
 import NetflixCrawler from '../NetflixCrawler'
 import Executor from './Executor'
+import { insertContentToastManagerToRoot } from '../../UI/ContentToastManager'
+
+const ROOT_NODE_ID = 'content-toast-manager-root'
+
+/**
+ * Insert Content Toast Manager to the DOM if needed.
+ */
+function insertContentToastManager() {
+  const isVideoPlayerPage = NetflixCrawler.controls.page === NetflixCrawler.Page.VIDEO_PLAYER
+  const isContentToastManagerInserted = document.getElementById(ROOT_NODE_ID)
+  if (!isVideoPlayerPage || isContentToastManagerInserted) {
+    return
+  }
+
+  const rootDiv = document.createElement('div')
+  rootDiv.id = ROOT_NODE_ID
+
+  const root = createRoot(rootDiv)
+  insertContentToastManagerToRoot(root)
+
+  NetflixCrawler.controls.videoPlayer.appendChild(rootDiv)
+}
 
 /**
  * Toggles subtitle between english and off.
@@ -243,6 +266,7 @@ function _closeSpeedControlMenu() {
 }
 
 export default {
+  insertContentToastManager,
   toggleSubtitle,
   toggleAudio,
   playFastest,

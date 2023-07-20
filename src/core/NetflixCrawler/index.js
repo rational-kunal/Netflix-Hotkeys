@@ -55,7 +55,7 @@ const guessPage = () => {
     return Page.PASSWORD_INPUT_WRONG
   }
 
-  if (document.querySelector("div[data-uia='watch-video']")) {
+  if (controls.videoPlayer) {
     return Page.VIDEO_PLAYER
   }
 
@@ -76,6 +76,11 @@ let controls = {
   /** @type {HTMLElement|null} */
   get profilePasswordInput() {
     return document.querySelector("input[data-uia='pin-number-0']")
+  },
+
+  /** @type {HTMLElement|null} */
+  get videoPlayer() {
+    return document.querySelector("div[data-uia='watch-video']")
   },
 
   /** @type {HTMLElement|null} */

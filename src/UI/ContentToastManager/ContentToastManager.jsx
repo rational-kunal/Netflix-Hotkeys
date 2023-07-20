@@ -13,7 +13,7 @@ const ToastDataPerEventType = {
   [HotkeysEventType.PLAY_SPEED_FASTEST]: {
     shouldDisplay: true,
     icon: SpeedOutlined,
-    text: '2x',
+    text: '1.5x',
   },
   [HotkeysEventType.PLAY_SPEED_NORMAL]: {
     shouldDisplay: false,
