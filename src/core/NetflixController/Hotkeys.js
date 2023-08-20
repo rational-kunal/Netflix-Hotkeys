@@ -50,9 +50,11 @@ function toggleSubtitle() {
 
       if (NetflixCrawler.controls.selectedSubtitleOption === NetflixCrawler.controls.englishSubtitleOption) {
         NetflixCrawler.controls.offSubtitleOption.click()
+        eventManager.activeEvent = new HotkeysEvent(HotkeysEventType.SUBTITLE_OFF)
         console.info('[🎹] [Audio/Subtitle] selected off subtitle')
       } else {
         NetflixCrawler.controls.englishSubtitleOption.click()
+        eventManager.activeEvent = new HotkeysEvent(HotkeysEventType.SUBTITLE_ON)
         console.info('[🎹] [Audio/Subtitle] selected english subtitle')
       }
 
@@ -136,7 +138,7 @@ function playFastest() {
       // 3. Close the menu.
       _closeSpeedControlMenu()
 
-      eventManager.activeEvent = new HotkeysEvent(HotkeysEventType.PLAY_SPEED_FASTEST)
+      eventManager.activeEvent = new HotkeysEvent(HotkeysEventType.PLAY_SPEED_FASTEST, false)
 
       return true
     })
@@ -174,7 +176,7 @@ function playNormal() {
       // 3. Close the menu.
       _closeSpeedControlMenu()
 
-      eventManager.activeEvent = new HotkeysEvent(HotkeysEventType.PLAY_SPEED_NORMAL)
+      eventManager.activeEvent = new HotkeysEvent(HotkeysEventType.PLAY_SPEED_NORMAL, false)
 
       return true
     })
@@ -212,7 +214,7 @@ function playSlowest() {
       // 3. Close the menu.
       _closeSpeedControlMenu()
 
-      eventManager.activeEvent = new HotkeysEvent(HotkeysEventType.PLAY_SPEED_SLOWEST)
+      eventManager.activeEvent = new HotkeysEvent(HotkeysEventType.PLAY_SPEED_SLOWEST, false)
 
       return true
     })

@@ -1,5 +1,7 @@
 import { Icon, Paper, Snackbar, Stack, Typography } from '@mui/material'
 import SpeedOutlined from '@mui/icons-material/SpeedOutlined'
+import ClosedCaptionOffOutlinedIcon from '@mui/icons-material/ClosedCaptionOffOutlined'
+import ClosedCaptionDisabledOutlinedIcon from '@mui/icons-material/ClosedCaptionDisabledOutlined'
 import useEventManager from '../hooks/useEventManager'
 import { HotkeysEventType } from '../../core/EventManager'
 import React from 'react'
@@ -19,6 +21,16 @@ const ToastDataPerEventType = {
     shouldDisplay: false,
     icon: null,
     text: null,
+  },
+  [HotkeysEventType.SUBTITLE_ON]: {
+    shouldDisplay: true,
+    icon: ClosedCaptionOffOutlinedIcon,
+    text: 'Subtitles On',
+  },
+  [HotkeysEventType.SUBTITLE_OFF]: {
+    shouldDisplay: true,
+    icon: ClosedCaptionDisabledOutlinedIcon,
+    text: 'Subtitles Off',
   },
 }
 

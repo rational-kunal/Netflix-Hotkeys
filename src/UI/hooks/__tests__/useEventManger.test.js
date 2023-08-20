@@ -19,6 +19,6 @@ describe('useEventManager', () => {
       eventManager.activeEvent = new HotkeysEvent(HotkeysEvent.PLAY_SPEED_FAST)
     })
 
-    expect(result.current).toEqual({ type: HotkeysEvent.PLAY_SPEED_FAST })
+    expect(result.current).toEqual(expect.objectContaining({ type: HotkeysEvent.PLAY_SPEED_FAST }))
   })
 })

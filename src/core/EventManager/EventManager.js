@@ -14,6 +14,10 @@ class EventManager {
   set activeEvent(event) {
     this.#activeEvent = event
     this.#dispatchEvent(event)
+
+    if (event && event.shouldClearAfterDelay) {
+      this.#clearActiveEventAfterDelay()
+    }
   }
 
   /** @type {Function[]} */
@@ -41,6 +45,16 @@ class EventManager {
    */
   #dispatchEvent(event) {
     this.#listeners.forEach((listener) => listener(event))
+  }
+
+  /**
+   * Clears the active event after a delay.
+   * @param {Number} delay
+   */
+  #clearActiveEventAfterDelay(delay = 1300) {
+    setTimeout(() => {
+      this.activeEvent = null
+    }, delay)
   }
 
   /**

@@ -1,5 +1,7 @@
 import { eventManager, HotkeysEvent, HotkeysEventType } from './index'
 
+jest.useFakeTimers()
+
 describe('EventManager', () => {
   afterEach(() => {
     eventManager.reset()
@@ -20,7 +22,7 @@ describe('EventManager', () => {
 
     eventManager.activeEvent = new HotkeysEvent(HotkeysEventType.PLAY_SPEED_FAST)
 
-    expect(callback).toHaveBeenCalledWith({ type: HotkeysEventType.PLAY_SPEED_FAST })
+    expect(callback).toHaveBeenCalledWith({ type: HotkeysEventType.PLAY_SPEED_FAST, shouldClearAfterDelay: true })
   })
 
   it('should call listeners multiple times if active event is changed multiple times', () => {
@@ -31,8 +33,8 @@ describe('EventManager', () => {
     eventManager.activeEvent = new HotkeysEvent(HotkeysEventType.PLAY_SPEED_NORMAL)
     eventManager.activeEvent = null
 
-    expect(callback).toHaveBeenCalledWith({ type: HotkeysEventType.PLAY_SPEED_FAST })
-    expect(callback).toHaveBeenCalledWith({ type: HotkeysEventType.PLAY_SPEED_NORMAL })
+    expect(callback).toHaveBeenCalledWith({ type: HotkeysEventType.PLAY_SPEED_FAST, shouldClearAfterDelay: true })
+    expect(callback).toHaveBeenCalledWith({ type: HotkeysEventType.PLAY_SPEED_NORMAL, shouldClearAfterDelay: true })
     expect(callback).toHaveBeenCalledWith(null)
     expect(callback).toHaveBeenCalledTimes(3)
   })
@@ -45,5 +47,15 @@ describe('EventManager', () => {
     eventManager.activeEvent = new HotkeysEvent(HotkeysEventType.PLAY_SPEED_FAST)
 
     expect(callback).not.toHaveBeenCalled()
+  })
+
+  it('should clear active event after a delay', () => {
+    eventManager.activeEvent = new HotkeysEvent(HotkeysEventType.SUBTITLE_ON)
+
+    expect(eventManager.activeEvent).not.toBeNull()
+
+    jest.runAllTimers()
+
+    expect(eventManager.activeEvent).toBeNull()
   })
 })
