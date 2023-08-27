@@ -7,18 +7,14 @@ describe('useEventManager', () => {
     eventManager.reset()
   })
 
-  it('should have null as active event by default', () => {
-    const { result } = renderHook(() => useEventManager())
-    expect(result.current).toBeNull()
-  })
-
-  it('should update active event when eventManager.activeEvent is changed', () => {
-    const { result } = renderHook(() => useEventManager())
+  it('should update active event when event is published', () => {
+    let event = null
+    const { result } = renderHook(() => useEventManager((e) => (event = e)))
 
     act(() => {
-      eventManager.activeEvent = new HotkeysEvent(HotkeysEvent.PLAY_SPEED_FAST)
+      eventManager.publish(new HotkeysEvent(HotkeysEvent.PLAY_SPEED_FAST))
     })
 
-    expect(result.current).toEqual(expect.objectContaining({ type: HotkeysEvent.PLAY_SPEED_FAST }))
+    expect(event).toEqual(expect.objectContaining({ type: HotkeysEvent.PLAY_SPEED_FAST }))
   })
 })

@@ -50,11 +50,11 @@ function toggleSubtitle() {
 
       if (NetflixCrawler.controls.selectedSubtitleOption === NetflixCrawler.controls.englishSubtitleOption) {
         NetflixCrawler.controls.offSubtitleOption.click()
-        eventManager.activeEvent = new HotkeysEvent(HotkeysEventType.SUBTITLE_OFF)
+        eventManager.publish(new HotkeysEvent(HotkeysEventType.SUBTITLE_OFF))
         console.info('[🎹] [Audio/Subtitle] selected off subtitle')
       } else {
         NetflixCrawler.controls.englishSubtitleOption.click()
-        eventManager.activeEvent = new HotkeysEvent(HotkeysEventType.SUBTITLE_ON)
+        eventManager.publish(new HotkeysEvent(HotkeysEventType.SUBTITLE_ON))
         console.info('[🎹] [Audio/Subtitle] selected english subtitle')
       }
 
@@ -93,9 +93,11 @@ function toggleAudio() {
 
       if (NetflixCrawler.controls.selectedAudioOption === NetflixCrawler.controls.englishAudioOption) {
         NetflixCrawler.controls.originalAudioOption.click()
+        eventManager.publish(new HotkeysEvent(HotkeysEventType.AUDIO_CHANGE_ORIGINAL))
         console.info('[🎹] [Audio/Subtitle] selected original audio')
       } else {
         NetflixCrawler.controls.englishAudioOption.click()
+        eventManager.publish(new HotkeysEvent(HotkeysEventType.AUDIO_CHANGE_ENGLISH))
         console.info('[🎹] [Audio/Subtitle] selected english audio')
       }
 
@@ -138,7 +140,7 @@ function playFastest() {
       // 3. Close the menu.
       _closeSpeedControlMenu()
 
-      eventManager.activeEvent = new HotkeysEvent(HotkeysEventType.PLAY_SPEED_FASTEST, false)
+      eventManager.publish(new HotkeysEvent(HotkeysEventType.PLAY_SPEED_FASTEST))
 
       return true
     })
@@ -176,7 +178,7 @@ function playNormal() {
       // 3. Close the menu.
       _closeSpeedControlMenu()
 
-      eventManager.activeEvent = new HotkeysEvent(HotkeysEventType.PLAY_SPEED_NORMAL, false)
+      eventManager.publish(new HotkeysEvent(HotkeysEventType.PLAY_SPEED_NORMAL))
 
       return true
     })
@@ -214,7 +216,7 @@ function playSlowest() {
       // 3. Close the menu.
       _closeSpeedControlMenu()
 
-      eventManager.activeEvent = new HotkeysEvent(HotkeysEventType.PLAY_SPEED_SLOWEST, false)
+      eventManager.publish(new HotkeysEvent(HotkeysEventType.PLAY_SPEED_SLOWEST))
 
       return true
     })

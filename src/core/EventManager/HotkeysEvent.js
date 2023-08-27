@@ -4,6 +4,8 @@ const HotkeysEventType = Object.freeze({
   PLAY_SPEED_SLOWEST: 'PLAY_SPEED_SLOWEST',
   SUBTITLE_ON: 'SUBTITLE_ON',
   SUBTITLE_OFF: 'SUBTITLE_OFF',
+  AUDIO_CHANGE_ENGLISH: 'AUDIO_CHANGE_ENGLISH',
+  AUDIO_CHANGE_ORIGINAL: 'AUDIO_CHANGE_ORIGINAL',
 })
 
 class HotkeysEvent {
@@ -14,20 +16,11 @@ class HotkeysEvent {
   type = null
 
   /**
-   * Whether the event should be cleared after a delay.
-   * Defaults to `true`.
-   * @type {Boolean}
-   */
-  shouldClearAfterDelay = true
-
-  /**
    * Creates a new Hotkeys Event.
    * @param {HotkeysEventType} type
-   * @param {Boolean} shouldClearAfterDelay
    */
-  constructor(type, shouldClearAfterDelay = true) {
+  constructor(type) {
     this.type = type
-    this.shouldClearAfterDelay = shouldClearAfterDelay
   }
 }
 

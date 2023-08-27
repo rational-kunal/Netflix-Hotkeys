@@ -1,23 +1,12 @@
 import { HotkeysEvent } from './HotkeysEvent'
 
 class EventManager {
-  /** @type {HotkeysEvent|null} */
-  #activeEvent = null
-
   /**
-   * The active event.
-   * @type {HotkeysEvent|null}
+   * Publish the passed event.
+   * @param {HotkeysEvent} event
    */
-  get activeEvent() {
-    return this.#activeEvent
-  }
-  set activeEvent(event) {
-    this.#activeEvent = event
+  publish(event) {
     this.#dispatchEvent(event)
-
-    if (event && event.shouldClearAfterDelay) {
-      this.#clearActiveEventAfterDelay()
-    }
   }
 
   /** @type {Function[]} */
@@ -48,22 +37,11 @@ class EventManager {
   }
 
   /**
-   * Clears the active event after a delay.
-   * @param {Number} delay
-   */
-  #clearActiveEventAfterDelay(delay = 1300) {
-    setTimeout(() => {
-      this.activeEvent = null
-    }, delay)
-  }
-
-  /**
    * Resets the Manager.
    *
    * NOTE: Used for testing purposes.
    */
   reset() {
-    this.#activeEvent = null
     this.#listeners = []
   }
 }

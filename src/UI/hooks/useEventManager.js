@@ -4,24 +4,22 @@ import { HotkeysEvent } from '../../core/EventManager/HotkeysEvent'
 
 /**
  * Layer between the eventManager and the UI.
- * @returns {HotkeysEvent|null} The active event.
+ * Listens to events and calls the listener.
+ * @param {function(HotkeysEvent): void} listener The listener.
+ * @returns {HotkeysEvent|null} The event.
  */
-function useEventManager() {
-  const [activeEvent, setActiveEvent] = useState(null)
-
+function useEventManager(listener) {
   useEffect(() => {
-    const callback = (event) => {
-      setActiveEvent(event)
+    const eventManagerCallback = (event) => {
+      listener(event)
     }
 
-    eventManager.addEventListener(callback)
+    eventManager.addEventListener(eventManagerCallback)
 
     return () => {
-      eventManager.removeEventListener(callback)
+      eventManager.removeEventListener(eventManagerCallback)
     }
   }, [])
-
-  return activeEvent
 }
 
 export default useEventManager
