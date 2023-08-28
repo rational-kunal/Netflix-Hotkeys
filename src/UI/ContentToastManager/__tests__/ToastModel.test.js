@@ -1,4 +1,4 @@
-import { HotkeysEventType } from '../../../../build/src/core/EventManager'
+import { HotkeysEventType } from '../../../core/EventManager'
 import { HotkeysEvent } from '../../../core/EventManager'
 import ToastModel from '../ToastModel'
 
